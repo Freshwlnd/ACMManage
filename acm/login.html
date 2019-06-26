@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>登陆</title>
+	<link rel="stylesheet" type="text/css" href="../themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="../demo.css">
+	<script type="text/javascript" src="../jquery.min.js"></script>
+	<script type="text/javascript" src="../jquery.easyui.min.js"></script>
+</head>
+<body>
+	<center><h1>欢迎登陆ACM管理系统</h1></center>
+	<div align="center" style="margin: 10px 0px"><input id="count"></div>
+	<div align="center" style="margin: 10px 0px"><input type="password" id="password"></div>
+	<div align="center" style="margin: 10px 0px"><button id="login">登陆</button></div>
+	<script>
+		$.extend($.fn.validatebox.defaults.rules,{
+			OnlyNum:{
+			validator:function(value){
+				return /^[0-9]{1,}$/.test(value);
+			},
+			message:'只允许输入数字'
+			}
+		});
+		$('#count').textbox({
+			required:true,
+			label:'学号',
+			labelPosition:'left',
+			labelAlign:'right',	
+			width:300,
+			cls:'newStyle',
+			validType:['length[10,10]','OnlyNum'],
+			missingMessage:'请输入学号',
+			invalidMessage:'请输入合法的学号',
+			tipPosition:'right',
+			validateOnCreate:false
+		});
+		$('#password').textbox({
+			label:'密码',
+			labelPosition:'left',
+			labelAlign:'right',
+			width:300
+		});
+		$('#login').click(function(){
+			//alert($('#password').textbox('getValue'));
+			if($('#count').textbox('getValue')=='1712190120'&&$('#password').textbox('getValue')=='admin'){
+				window.location.href="./index.html";
+			}
+		});
+	</script>
+</body>
