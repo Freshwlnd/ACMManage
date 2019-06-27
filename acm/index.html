@@ -1,33 +1,66 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<meta charset="UTF-8">
-	<title>首页</title>
-	<link rel="stylesheet" type="text/css" href="../themes/default/easyui.css">
-	<link rel="stylesheet" type="text/css" href="../themes/icon.css">
-	<link rel="stylesheet" type="text/css" href="../demo.css">
-	<script type="text/javascript" src="../jquery.min.js"></script>
-	<script type="text/javascript" src="../jquery.easyui.min.js"></script>
-</head>
-<body style="background:url(background.jpg);background-size:100% 100%;background-repeat:no-repeat;background-attachment:fixed">
-	<center><h1>ACM内部信息管理系统</h1></center>
-	<div align="right"><u>1712190120</u></div>
-	<div id="tt" style="opacity:0.9">
-		<div title="首页" href="./homepage.html"></div>
-		<div title="信息维护" href="./maintain.html"></div>
-		<div title="信息查询" href="./query.html"></div>
-		<div title="个人申请"></div>
-		<div title="事务公告"></div>
-		<div title="队内排名"></div>
-	</div>
-	<script>
-		$(function(){
-			$('#tt').tabs({
-				width:"1500",
-				height:"800",
-				justified:"true"
+	<head>
+		<meta charset="UTF-8">
+		<title>首页</title>
+		<link rel="stylesheet" type="text/css" href="../themes/default/easyui.css">
+		<link rel="stylesheet" type="text/css" href="../themes/icon.css">
+		<link rel="stylesheet" type="text/css" href="../demo.css">
+		<script type="text/javascript" src="../jquery.min.js"></script>
+		<script type="text/javascript" src="../jquery.easyui.min.js"></script>
+	</head>
+	<body onload="GetPNo()">
+	<body style="background:url(background.jpg);background-size:100% 100%;background-repeat:no-repeat;background-attachment:fixed">
+		<center><h1>ACM内部信息管理系统</h1></center>
+		<div align="right"><u>
+			<p id="p1" style="color:#fff"><u>游客</u></p>
+			<a id="logout" style="margin:0px 10px">Log Out</a>
+		</u></div>
+		<div id="tt" style="opacity:0.9">
+			<div title="首页" href="./homepage.html"></div>
+			<div title="信息维护" href="./maintain.html"></div>
+			<div title="信息查询" href="./query.html"></div>
+			<div title="个人申请" href="./selectinfo.html"></div>
+			<div title="事务公告"></div>
+			<div title="队内排名"></div>
+		</div>
+		<script>
+			$(function(){
+				$('#tt').tabs({
+					width:"1500",
+					height:"800",
+					justified:"true"
+				});
 			});
-		});
-	</script>
-</body>
+			function GetPNo() {
+				$.ajax({
+					type: 'post',
+					async : false, //同步请求
+					url: './GetPNo.php',
+					data: {},
+					success: function (data) {
+						document.getElementById("p1").innerHTML=data;
+					}
+				})
+			}
+			$('#logout').linkbutton({
+				width:120,
+				group:"bg"
+			})
+			$('#logout').click(function(){
+				$.ajax({
+					type: 'post',
+					url: './LogOut.php',
+					success: function (data) {
+						if(data==true) {
+							alert('登出成功！');
+							location.reload();
+						} else {
+							alert(data);
+						}
+					}
+				});
+			});
+		</script>
+	</body>
 </html>

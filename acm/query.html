@@ -16,7 +16,8 @@
 		$('#dg').datagrid({
 			rownumbers:true,
 			showFooter:true,
-			url:'./GetData.php',
+			loadMsg:"数据正在加载中...",
+			url:'./GetAllData.php',
 			columns:[[
 				{field:"PName",title:'姓名',editor:'textbox'},
 				{field:"PNo",title:'学号',editor:'textbox'},
@@ -27,9 +28,9 @@
 				{field:"PWechat",title:'微信号',editor:'textbox'},
 				{field:"PT_Size",title:'T恤大小',editor:'textbox'}
 			]],
-			data:[
+			/*data:[
 				{PName:"徐悦皓",PNo:"1712190114",PClass:"计科1701",PPhone:"13456789",PBankNo:"15645656",PQQ:"10001",PWechat:"wc",PT_Size:"XXXXL"}
-			],
+			],*/
 			//工具栏中添加取消编辑的按钮
 				toolbar:[
 				{
@@ -62,7 +63,7 @@
 						$.ajax({
 						type:'post',
 						async:false,
-						url:'./InsertData.php',
+						url:'./InsertPerson.php',
 						data:{
 							'PName':row[0],
 							'PNo':row[1],
@@ -94,7 +95,7 @@
 						$.ajax({
 							type:'post',
 							async:false,
-							url:'./InsertData.php',
+							url:'./DeletePerson.php',
 							data:{
 								"PNo":row[1],
 							},
@@ -109,6 +110,7 @@
 						else{
 							alert("删除失败");
 						}
+					}
 				},
 				{
 					iconCls:'icon-cancel',
@@ -151,27 +153,6 @@
 					for(let i in row){
 						console.log(row[i]);
 					}
-				}
-				onEndEdit:function(index,row,changes){
-					var result;
-					$.ajax({
-					type:'post',
-					async:false,
-					url:'./InsertData.php',
-					data:{
-						'PName':row[0],
-						'PNo':row[1],
-						'PClass':row[2],
-						'PPhone':row[3],
-						'PBankNo':row[4],
-						'PQQ':row[5],
-						'PWechat':row[6],
-						'PT_Size':row[7],
-					},
-					success:function(data){
-						result=data;
-					}
-					});
 				}
 		})
 	</script>
