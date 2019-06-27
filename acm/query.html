@@ -16,6 +16,7 @@
 		$('#dg').datagrid({
 			rownumbers:true,
 			showFooter:true,
+			url:'./GetData.php',
 			columns:[[
 				{field:"PName",title:'姓名',editor:'textbox'},
 				{field:"PNo",title:'学号',editor:'textbox'},
@@ -57,17 +58,57 @@
 					handler:function(){
 						var row=$("#dg").datagrid('getSelected');
 						var index=$("#dg").datagrid('getRowIndex',row);
-						$("#dg").datagrid('endEdit',index);
+						var result;
+						$.ajax({
+						type:'post',
+						async:false,
+						url:'./InsertData.php',
+						data:{
+							'PName':row[0],
+							'PNo':row[1],
+							'PClass':row[2],
+							'PPhone':row[3],
+							'PBankNo':row[4],
+							'PQQ':row[5],
+							'PWechat':row[6],
+							'PT_Size':row[7],
+						},
+						success:function(data){
+							result=data;
+						}
+						});
+						if(result==true){
+							$("#dg").datagrid('endEdit',index);
+						}
+						else{
+							$("#dg").datagrid('cancelEdit',index);
+							alert("修改失败");
+						}
 						$("#dg").datagrid('unselectRow',index);
 					}
 				},
 				{
 					iconCls:'icon-remove',
 					handler:function(){
-						var row=$("#dg").datagrid('getSelected');
-						var index=$("#dg").datagrid('getRowIndex',row);
-						$('#dg').datagrid('deleteRow',index);
-					}
+						var row=$("#dg").datagrid('getSelected'),result;
+						$.ajax({
+							type:'post',
+							async:false,
+							url:'./InsertData.php',
+							data:{
+								"PNo":row[1],
+							},
+							success:function (data) {
+								result=data;
+							}
+						});
+						if(result==true){
+							var index=$("#dg").datagrid('getRowIndex',row);
+							$('#dg').datagrid('deleteRow',index);
+						}
+						else{
+							alert("删除失败");
+						}
 				},
 				{
 					iconCls:'icon-cancel',
@@ -112,6 +153,7 @@
 					}
 				}
 				onEndEdit:function(index,row,changes){
+					var result;
 					$.ajax({
 					type:'post',
 					async:false,
@@ -126,7 +168,10 @@
 						'PWechat':row[6],
 						'PT_Size':row[7],
 					},
-				});
+					success:function(data){
+						result=data;
+					}
+					});
 				}
 		})
 	</script>
