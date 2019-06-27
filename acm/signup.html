@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>首页</title>
+	<link rel="stylesheet" type="text/css" href="../themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="../demo.css">
+	<script type="text/javascript" src="../jquery.min.js"></script>
+	<script type="text/javascript" src="../jquery.easyui.min.js"></script>
+</head>
+<body>
+	<center><h1>ACM集训队队员注册</h1></center>
+	<div align="center" style="margin: 10px 0px"><input id="PName"></div>
+	<div align="center" style="margin: 10px 0px"><input id="PNo"></div>
+	<div align="center" style="margin: 10px 0px"><input id="PClass"></div>
+	<div align="center" style="margin: 10px 0px"><input id="PPhone"></div>
+	<div align="center" style="margin: 10px 0px"><input id="PBankNo"></div>
+	<div align="center" style="margin: 10px 0px"><input id="PQQ"></div>
+	<div align="center" style="margin: 10px 0px"><input id="PWechat"></div>
+	<div align="center" style="margin: 10px 0px"><input id="PT_Size"></div>
+	<div align="center" style="margin: 10px 0px" width=300px><button id="commit">提交</button></div>
+	<script>
+		$('#PName').textbox({
+			required:true,
+			label:'*姓名',
+			labelPosition:'left',
+			labelAlign:'right',	
+			width:300,
+			cls:'newStyle',
+			missingMessage:'姓名不能为空',
+			tipPosition:'right',
+			validateOnCreate:false
+		});
+		$('#PNo').textbox({
+			required:true,
+			label:'*学号',
+			labelPosition:'left',
+			labelAlign:'right',	
+			width:300,
+			cls:'newStyle',
+			missingMessage:'学号不能为空',
+			tipPosition:'right',
+			validateOnCreate:false
+		});
+		$('#PClass').textbox({
+			label:'班级',
+			labelPosition:'left',
+			labelAlign:'right',	
+			width:300,
+			cls:'newStyle',
+			tipPosition:'right',
+			validateOnCreate:false
+		});
+		$('#PPhone').textbox({
+			required:true,
+			label:'*手机号',
+			labelPosition:'left',
+			labelAlign:'right',	
+			width:300,
+			cls:'newStyle',
+			missingMessage:'手机号不能为空',
+			tipPosition:'right',
+			validateOnCreate:false
+		});
+		$('#PBankNo').textbox({
+			required:true,
+			label:'*银行卡号',
+			labelPosition:'left',
+			labelAlign:'right',	
+			width:300,
+			cls:'newStyle',
+			missingMessage:'银行卡号不能为空',
+			tipPosition:'right',
+			validateOnCreate:false
+		});
+		$('#PQQ').textbox({
+			required:true,
+			label:'*QQ号',
+			labelPosition:'left',
+			labelAlign:'right',	
+			width:300,
+			cls:'newStyle',
+			missingMessage:'QQ号不能为空',
+			tipPosition:'right',
+			validateOnCreate:false
+		});
+		$('#PWechat').textbox({
+			required:true,
+			label:'*微信号',
+			labelPosition:'left',
+			labelAlign:'right',	
+			width:300,
+			cls:'newStyle',
+			missingMessage:'微信号不能为空',
+			tipPosition:'right',
+			validateOnCreate:false
+		});
+		$('#PT_Size').textbox({
+			required:true,
+			label:'*T恤大小',
+			labelPosition:'left',
+			labelAlign:'right',	
+			width:300,
+			cls:'newStyle',
+			missingMessage:'T恤大小不能为空',
+			tipPosition:'right',
+			validateOnCreate:false
+		});
+		function insert(PName,PNo,PClass,PPhone,PBankNo,PQQ,PWechat,PT_Size){
+				var result;
+				$.ajax({
+					type:'post',
+					async:false,
+					url:'./InsertPerson.php',
+					data:{
+						'PName':PName,
+						'PNo':PNo,
+						'PClass':PClass,
+						'PPhone':PPhone,
+						'PBankNo':PBankNo,
+						'PQQ':PQQ,
+						'PWechat':PWechat,
+						'PT_Size':PT_Size
+					},
+					success:function (data) {
+						result=data;
+					}
+				});
+				if(result=='0'){
+					return true;
+				}
+				else{
+					return false;
+				}
+			}
+		$('#commit').click(function(){
+			if($('#PName').textbox('isValid')&&$('#PNo').textbox('isValid')&&$('#PPhone').textbox('isValid')&&$('#PBankNo').textbox('isValid')&&$('#PQQ').textbox('isValid')&&$('#PWechat').textbox('isValid')&&$('#PT_Size').textbox('isValid')){
+				if(insert($('#PName').textbox('getText'),$('#PNo').textbox('getText'),$('#PClass').textbox('getText'),$('#PPhone').textbox('getText'),$('#PBankNo').textbox('getText'),$('#PQQ').textbox('getText'),$('#PWechat').textbox('getText'),$('#PT_Size').textbox('getText'))){
+					alert("注册成功");
+				}
+				else{
+					alert("该用户已存在");
+				}
+			}
+
+		});
+	</script>
+</body>
+</html>
