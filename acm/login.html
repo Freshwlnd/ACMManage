@@ -9,14 +9,23 @@
 	<script type="text/javascript" src="../jquery.min.js"></script>
 	<script type="text/javascript" src="../jquery.easyui.min.js"></script>
 </head>
-<body>
-	<center><h1>欢迎登陆ACM管理系统</h1></center>
-	<div align="center" style="margin: 10px 0px"><input id="count"></div>
-	<div align="center" style="margin: 10px 0px"><input type="password" id="password"></div>
-	<div align="center" style="margin: 10px 0px">
-		<button id="login">登陆</button>
-		<button id="signup">注册</button>
-	</div>
+<body style="background-color: #193956;background:url(background.html)">
+<div id="p1" style="padding:10px;background:#ccd3d9;color:#000;border-radius:24px;opacity:0.5"><p></p></div>
+	<div id="p" style="padding:10px;background:#99a7b4;color:#000;border-radius:24px;font:'Droid Sans'" align="center"><p>
+		<div style="margin: 40px 0px"><center><h1>欢迎登陆ACM管理系统</h1></center></div>
+		<div style="margin: 10px 0px"><input id="count" placeholder="请输入你的学号"></div>
+		<div style="margin: 10px 0px"><input id="password"></div>
+		<div style="margin: 50px 5px">
+			<a id="login" style="margin:0px 10px">登陆</a>
+			<a id="signup" style="margin:0px 10px">注册</a>
+		</div>
+	</p></div>
+
+<style>
+	.pos{
+		position: absolute;
+	}
+</style>
 	<script>
 		$.extend($.fn.validatebox.defaults.rules,{
 			OnlyNum:{
@@ -26,6 +35,18 @@
 			message:'只允许输入数字'
 			}
 		});
+		$('#p').panel({
+			width:500,
+			height:350,
+			cls:'pos',
+			//region:'center'
+		})
+		$('#p1').panel({
+			width:1000,
+			height:700,
+			cls:'pos',
+			//region:'center'
+		})
 		$('#count').textbox({
 			required:true,
 			label:'学号',
@@ -37,19 +58,31 @@
 			missingMessage:'请输入学号',
 			invalidMessage:'请输入合法的学号',
 			tipPosition:'right',
-			validateOnCreate:false
+			validateOnCreate:false,
+			icons:[
+				{
+					iconCls:'icon-man',
+					disabled:true
+				},
+			],
+			prompt:'请输入你的学号',
 		});
-		$('#password').textbox({
+		$('#password').passwordbox({
 			label:'密码',
 			labelPosition:'left',
 			labelAlign:'left',
-			width:300
+			width:300,
+			prompt:'请输入你的密码',
+			checkInterval:0,
+			showEye:true
 		});
 		$('#login').linkbutton({
-			width:150
+			width:120,
+			group:"bg"
 		})
 		$('#signup').linkbutton({
-			width:150
+			width:120,
+			group:"bg"
 		})
 		$('#login').click(function(){
 			//alert($('#password').textbox('getValue'));
@@ -60,5 +93,43 @@
 		$('#signup').click(function(){			
 			window.location.href="./signup.html";
 		});
+		$(function ()
+        {
+            SetCenter();
+            window.onresize = function ()
+            {
+                setTimeout(function () { SetCenter(); }, 100);
+            }
+        });
+ 
+        function SetCenter()
+        {
+            var top = ($(window).height() - $('#p').height() - 2) / 2;  // 边框宽度为2
+            var left = ($(window).width() - $('#p').width() - 2) / 2;
+ 
+            if (top < 0) top = 0;
+            if (left < 0) left = 0;
+ 
+            $('#p').panel('move', { left: left, top: top });  // 可以省略 move 方法
+        }
+        $(function ()
+        {
+            SetCenter_p1();
+            window.onresize = function ()
+            {
+                setTimeout(function () { SetCenter_p1(); }, 100);
+            }
+        });
+ 
+        function SetCenter_p1()
+        {
+            //var top = ($(window).height() - $('#p1').height() - 2) / 2;  // 边框宽度为2
+            var left = ($(window).width() - $('#p1').width() - 2) / 2;
+ 
+            if (top < 0) top = 0;
+            if (left < 0) left = 0;
+ 
+            $('#p1').panel('move', { left: left, top: top });  // 可以省略 move 方法
+        }
 	</script>
 </body>
