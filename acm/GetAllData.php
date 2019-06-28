@@ -2,7 +2,7 @@
 
 $servername = "127.0.0.1";
 $username0 = "root";
-$password0 = "root";
+$password0 = "";
 $dbname = "ACMInfo";
 
 // 创建连接

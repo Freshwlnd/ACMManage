@@ -2,7 +2,7 @@
 
 $servername = "127.0.0.1";
 $username0 = "root";
-$password0 = "root";
+$password0 = "";
 $dbname = "ACMInfo";
 
 // 创建连接
@@ -32,11 +32,8 @@ $sql1 = "DELETE FROM person WHERE PNo='$PNo'";
 
 $result = $conn->query($sql1);
 
-if ($result==TRUE) {
-    echo true;
-} else {
-    echo false;
-}
+echo $result;
+
 $conn->close();
 
 ?>

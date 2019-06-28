@@ -2,7 +2,7 @@
 
 $servername = "127.0.0.1";
 $username0 = "root";
-$password0 = "root";
+$password0 = "";
 $dbname = "ACMInfo";
 
 // 创建连接
@@ -14,8 +14,6 @@ if ($conn->connect_error) {
 
 $account = $_POST['account'];
 $password = md5($_POST['password']);
-//$account = '1712190114';
-//$password = 'admin';
 
 $sql1 = "SELECT * FROM person WHERE PNo='$account' AND PPassword='$password'";
 

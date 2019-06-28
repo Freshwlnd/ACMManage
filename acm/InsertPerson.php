@@ -2,7 +2,7 @@
 
 $servername = "127.0.0.1";
 $username0 = "root";
-$password0 = "root";
+$password0 = "";
 $dbname = "ACMInfo";
 
 // 创建连接
@@ -35,14 +35,11 @@ $PPassword = md5('123456');
 $sql1 = "INSERT INTO
     person(PNo, PName, PClass, PBankNo, PPhone, PQQ, PWechat, PT_Size, PPassword)
      Value ('$PNo', '$PName', '$PClass', '$PBankNo', '$PPhone', '$PQQ', '$PWechat', '$PT_Size', '$PPassword')";
-
+//echo $sql1;
 $result = $conn->query($sql1);
 
-if ($result==TRUE) {
-    echo true;
-} else {
-    echo false;
-}
+echo $result;
+
 $conn->close();
 
 ?>

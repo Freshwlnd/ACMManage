@@ -1,211 +1,211 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<title>注册</title>
-	<link rel="stylesheet" type="text/css" href="../themes/default/easyui.css">
-	<link rel="stylesheet" type="text/css" href="../themes/icon.css">
-	<link rel="stylesheet" type="text/css" href="../demo/demo.css">
-	<script type="text/javascript" src="../jquery.min.js"></script>
-	<script type="text/javascript" src="../jquery.easyui.min.js"></script>
+    <meta charset="UTF-8">
+    <title>注册</title>
+    <link rel="stylesheet" type="text/css" href="../themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="../demo/demo.css">
+    <script type="text/javascript" src="../jquery.min.js"></script>
+    <script type="text/javascript" src="../jquery.easyui.min.js"></script>
 </head>
-<body style="background-color: #193956">
-<div id="p1" style="padding:10px;background:#ccd3d9;color:#000;border-radius:24px"><p></p></div>
-<div id="p" style="padding:10px;background:#99a7b4;color:#000;border-radius:24px;font:'Droid Sans'" align="center"><p>
-	<center><h1>ACM集训队队员注册</h1></center>
-	<div align="center" style="margin: 10px 0px"><input id="PName"></div>
-	<div align="center" style="margin: 10px 0px"><input id="PNo"></div>
-	<div align="center" style="margin: 10px 0px"><input id="PClass"></div>
-	<div align="center" style="margin: 10px 0px"><input id="PPhone"></div>
-	<div align="center" style="margin: 10px 0px"><input id="PBankNo"></div>
-	<div align="center" style="margin: 10px 0px"><input id="PQQ"></div>
-	<div align="center" style="margin: 10px 0px"><input id="PWechat"></div>
-	<div align="center" style="margin: 10px 0px"><input id="PT_Size"></div>
-	<div align="center" style="margin: 25px 0px" ><a id="commit">提交</a></div>
-</p></div>
-<style>
-	.pos{
-		position: absolute;
-	}
-</style>
-	<script>
-		$('#p').panel({
-			width:500,
-			height:500,
-			cls:'pos',
-			//region:'center'
-		})
-		$('#p1').panel({
-			width:1000,
-			height:700,
-			cls:'pos',
-			//region:'center'
-		})
-		$('#PName').textbox({
-			required:true,
-			label:'*姓名',
-			labelPosition:'left',
-			labelAlign:'left',	
-			width:300,
-			cls:'newStyle',
-			missingMessage:'姓名不能为空',
-			tipPosition:'right',
-			validateOnCreate:false
-		});
-		$('#PNo').textbox({
-			required:true,
-			label:'*学号',
-			labelPosition:'left',
-			labelAlign:'left',	
-			width:300,
-			cls:'newStyle',
-			missingMessage:'学号不能为空',
-			tipPosition:'right',
-			validateOnCreate:false
-		});
-		$('#PClass').textbox({
-			label:'班级',
-			labelPosition:'left',
-			labelAlign:'left',	
-			width:300,
-			cls:'newStyle',
-			tipPosition:'right',
-			validateOnCreate:false
-		});
-		$('#PPhone').textbox({
-			required:true,
-			label:'*手机号',
-			labelPosition:'left',
-			labelAlign:'left',	
-			width:300,
-			cls:'newStyle',
-			missingMessage:'手机号不能为空',
-			tipPosition:'right',
-			validateOnCreate:false
-		});
-		$('#PBankNo').textbox({
-			required:true,
-			label:'*银行卡号',
-			labelPosition:'left',
-			labelAlign:'left',	
-			width:300,
-			cls:'newStyle',
-			missingMessage:'银行卡号不能为空',
-			tipPosition:'right',
-			validateOnCreate:false
-		});
-		$('#PQQ').textbox({
-			required:true,
-			label:'*QQ号',
-			labelPosition:'left',
-			labelAlign:'left',	
-			width:300,
-			cls:'newStyle',
-			missingMessage:'QQ号不能为空',
-			tipPosition:'right',
-			validateOnCreate:false
-		});
-		$('#PWechat').textbox({
-			required:true,
-			label:'*微信号',
-			labelPosition:'left',
-			labelAlign:'left',	
-			width:300,
-			cls:'newStyle',
-			missingMessage:'微信号不能为空',
-			tipPosition:'right',
-			validateOnCreate:false
-		});
-		$('#PT_Size').textbox({
-			required:true,
-			label:'*T恤大小',
-			labelPosition:'left',
-			labelAlign:'left',	
-			width:300,
-			cls:'newStyle',
-			missingMessage:'T恤大小不能为空',
-			tipPosition:'right',
-			validateOnCreate:false
-		});
-		$('#commit').linkbutton({
-			width:150
-		})
-		function insert(PName,PNo,PClass,PPhone,PBankNo,PQQ,PWechat,PT_Size){
-				var result;
-				$.ajax({
-					type:'post',
-					async:false,
-					url:'./InsertPerson.php',
-					data:{
-						'PName':PName,
-						'PNo':PNo,
-						'PClass':PClass,
-						'PPhone':PPhone,
-						'PBankNo':PBankNo,
-						'PQQ':PQQ,
-						'PWechat':PWechat,
-						'PT_Size':PT_Size
-					},
-					success:function (data) {
-						result=data;
-					}
-				});
-				if(result=='0'){
-					return true;
-				}
-				else{
-					return false;
-				}
-			}
-		$('#commit').click(function(){
-			if($('#PName').textbox('isValid')&&$('#PNo').textbox('isValid')&&$('#PPhone').textbox('isValid')&&$('#PBankNo').textbox('isValid')&&$('#PQQ').textbox('isValid')&&$('#PWechat').textbox('isValid')&&$('#PT_Size').textbox('isValid')){
-				if(insert($('#PName').textbox('getText'),$('#PNo').textbox('getText'),$('#PClass').textbox('getText'),$('#PPhone').textbox('getText'),$('#PBankNo').textbox('getText'),$('#PQQ').textbox('getText'),$('#PWechat').textbox('getText'),$('#PT_Size').textbox('getText'))){
-					alert("注册成功");
-				}
-				else{
-					alert("该用户已存在");
-				}
-			}
+    <body style="background-color: #193956">
+        <div id="p1" style="padding:10px;background:#ccd3d9;color:#000;border-radius:24px"><p></p></div>
+        <div id="p" style="padding:10px;background:#99a7b4;color:#000;border-radius:24px;font:'Droid Sans'" align="center"><p>
+            <center><h1>ACM集训队队员注册</h1></center>
+            <div align="center" style="margin: 10px 0px"><input id="PName"></div>
+            <div align="center" style="margin: 10px 0px"><input id="PNo"></div>
+            <div align="center" style="margin: 10px 0px"><input id="PClass"></div>
+            <div align="center" style="margin: 10px 0px"><input id="PPhone"></div>
+            <div align="center" style="margin: 10px 0px"><input id="PBankNo"></div>
+            <div align="center" style="margin: 10px 0px"><input id="PQQ"></div>
+            <div align="center" style="margin: 10px 0px"><input id="PWechat"></div>
+            <div align="center" style="margin: 10px 0px"><input id="PT_Size"></div>
+            <div align="center" style="margin: 25px 0px" ><a id="commit">提交</a></div>
+            </p></div>
+        <style>
+            .pos{
+                position: absolute;
+            }
+        </style>
+        <script>
+            $('#p').panel({
+                width:500,
+                height:500,
+                cls:'pos',
+                //region:'center'
+            })
+            $('#p1').panel({
+                width:1000,
+                height:700,
+                cls:'pos',
+                //region:'center'
+            })
+            $('#PName').textbox({
+                required:true,
+                label:'*姓名',
+                labelPosition:'left',
+                labelAlign:'left',
+                width:300,
+                cls:'newStyle',
+                missingMessage:'姓名不能为空',
+                tipPosition:'right',
+                validateOnCreate:false
+            });
+            $('#PNo').textbox({
+                required:true,
+                label:'*学号',
+                labelPosition:'left',
+                labelAlign:'left',
+                width:300,
+                cls:'newStyle',
+                missingMessage:'学号不能为空',
+                tipPosition:'right',
+                validateOnCreate:false
+            });
+            $('#PClass').textbox({
+                label:'班级',
+                labelPosition:'left',
+                labelAlign:'left',
+                width:300,
+                cls:'newStyle',
+                tipPosition:'right',
+                validateOnCreate:false
+            });
+            $('#PPhone').textbox({
+                required:true,
+                label:'*手机号',
+                labelPosition:'left',
+                labelAlign:'left',
+                width:300,
+                cls:'newStyle',
+                missingMessage:'手机号不能为空',
+                tipPosition:'right',
+                validateOnCreate:false
+            });
+            $('#PBankNo').textbox({
+                required:true,
+                label:'*银行卡号',
+                labelPosition:'left',
+                labelAlign:'left',
+                width:300,
+                cls:'newStyle',
+                missingMessage:'银行卡号不能为空',
+                tipPosition:'right',
+                validateOnCreate:false
+            });
+            $('#PQQ').textbox({
+                required:true,
+                label:'*QQ号',
+                labelPosition:'left',
+                labelAlign:'left',
+                width:300,
+                cls:'newStyle',
+                missingMessage:'QQ号不能为空',
+                tipPosition:'right',
+                validateOnCreate:false
+            });
+            $('#PWechat').textbox({
+                required:true,
+                label:'*微信号',
+                labelPosition:'left',
+                labelAlign:'left',
+                width:300,
+                cls:'newStyle',
+                missingMessage:'微信号不能为空',
+                tipPosition:'right',
+                validateOnCreate:false
+            });
+            $('#PT_Size').textbox({
+                required:true,
+                label:'*T恤大小',
+                labelPosition:'left',
+                labelAlign:'left',
+                width:300,
+                cls:'newStyle',
+                missingMessage:'T恤大小不能为空',
+                tipPosition:'right',
+                validateOnCreate:false
+            });
+            $('#commit').linkbutton({
+                width:150
+            })
+            function insert(PName,PNo,PClass,PPhone,PBankNo,PQQ,PWechat,PT_Size){
+                var result;
+                $.ajax({
+                    type:'post',
+                    async:false,
+                    url:'./InsertPerson.php',
+                    data:{
+                        'PName':PName,
+                        'PNo':PNo,
+                        'PClass':PClass,
+                        'PPhone':PPhone,
+                        'PBankNo':PBankNo,
+                        'PQQ':PQQ,
+                        'PWechat':PWechat,
+                        'PT_Size':PT_Size
+                    },
+                    success:function (data) {
+                        result=data;
+                    }
+                });
+                if(result==true){
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }
+            $('#commit').click(function(){
+                if($('#PName').textbox('isValid')&&$('#PNo').textbox('isValid')&&$('#PPhone').textbox('isValid')&&$('#PBankNo').textbox('isValid')&&$('#PQQ').textbox('isValid')&&$('#PWechat').textbox('isValid')&&$('#PT_Size').textbox('isValid')){
+                    if(insert($('#PName').textbox('getText'),$('#PNo').textbox('getText'),$('#PClass').textbox('getText'),$('#PPhone').textbox('getText'),$('#PBankNo').textbox('getText'),$('#PQQ').textbox('getText'),$('#PWechat').textbox('getText'),$('#PT_Size').textbox('getText'))){
+                        alert("注册成功");
+                    }
+                    else{
+                        alert("该用户已存在");
+                    }
+                }
 
-		});
-		$(function ()
-        {
-            SetCenter();
-            window.onresize = function ()
+            });
+            $(function ()
             {
-                setTimeout(function () { SetCenter(); }, 100);
-            }
-        });
- 
-        function SetCenter()
-        {
-            var top = ($(window).height() - $('#p').height() - 2) / 2;  // 边框宽度为2
-            var left = ($(window).width() - $('#p').width() - 2) / 2;
- 
-            if (top < 0) top = 0;
-            if (left < 0) left = 0;
- 
-            $('#p').panel('move', { left: left, top: top });  // 可以省略 move 方法
-        }
-        $(function ()
-        {
-            SetCenter_p1();
-            window.onresize = function ()
+                SetCenter();
+                window.onresize = function ()
+                {
+                    setTimeout(function () { SetCenter(); }, 100);
+                }
+            });
+
+            function SetCenter()
             {
-                setTimeout(function () { SetCenter_p1(); }, 100);
+                var top = ($(window).height() - $('#p').height() - 2) / 2;  // 边框宽度为2
+                var left = ($(window).width() - $('#p').width() - 2) / 2;
+
+                if (top < 0) top = 0;
+                if (left < 0) left = 0;
+
+                $('#p').panel('move', { left: left, top: top });  // 可以省略 move 方法
             }
-        });
- 
-        function SetCenter_p1()
-        {
-            //var top = ($(window).height() - $('#p1').height() - 2) / 2;  // 边框宽度为2
-            var left = ($(window).width() - $('#p1').width() - 2) / 2;
- 
-            if (top < 0) top = 0;
-            if (left < 0) left = 0;
- 
-            $('#p1').panel('move', { left: left, top: top });  // 可以省略 move 方法
-        }
-	</script>
-</body>
+            $(function ()
+            {
+                SetCenter_p1();
+                window.onresize = function ()
+                {
+                    setTimeout(function () { SetCenter_p1(); }, 100);
+                }
+            });
+
+            function SetCenter_p1()
+            {
+                //var top = ($(window).height() - $('#p1').height() - 2) / 2;  // 边框宽度为2
+                var left = ($(window).width() - $('#p1').width() - 2) / 2;
+
+                if (top < 0) top = 0;
+                if (left < 0) left = 0;
+
+                $('#p1').panel('move', { left: left, top: top });  // 可以省略 move 方法
+            }
+        </script>
+    </body>
 </html>
