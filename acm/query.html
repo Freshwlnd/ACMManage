@@ -5,156 +5,157 @@
 	<title>首页</title>
 	<link rel="stylesheet" type="text/css" href="../themes/default/easyui.css">
 	<link rel="stylesheet" type="text/css" href="../themes/icon.css">
-	<link rel="stylesheet" type="text/css" href="../demo.css">
+	<link rel="stylesheet" type="text/css" href="../demo/demo.css">
 	<script type="text/javascript" src="../jquery.min.js"></script>
 	<script type="text/javascript" src="../jquery.easyui.min.js"></script>
 </head>
 <body>
-	
-	<table id="dg" style="width:auto;height:auto;border:1px solid#ccc;"></table>
-	<script>
-		$('#dg').datagrid({
-			rownumbers:true,
-			showFooter:true,
-			loadMsg:"数据正在加载中...",
-			url:'./GetAllData.php',
-			columns:[[
-				{field:"PName",title:'姓名',editor:'textbox'},
-				{field:"PNo",title:'学号',editor:'textbox'},
-				{field:"PClass",title:'班级',editor:'textbox'},
-				{field:"PPhone",title:'电话',editor:'textbox'},
-				{field:"PBankNo",title:'银行卡号',editor:'textbox'},
-				{field:"PQQ",title:'QQ号',editor:'textbox'},
-				{field:"PWechat",title:'微信号',editor:'textbox'},
-				{field:"PT_Size",title:'T恤大小',editor:'textbox'}
-			]],
-			/*data:[
-				{PName:"徐悦皓",PNo:"1712190114",PClass:"计科1701",PPhone:"13456789",PBankNo:"15645656",PQQ:"10001",PWechat:"wc",PT_Size:"XXXXL"}
-			],*/
-			//工具栏中添加取消编辑的按钮
-				toolbar:[
-				{
-					iconCls:'icon-add',
-					handler:function(){
-						$("#dg").datagrid('appendRow',['','','','','','','','']);
-						d=$('#dg').datagrid('getRows');
-						var maxrow=0;
-						for(let i in d){
-							maxrow=parseInt(i);
-						}
-						console.log(maxrow);
-						$('#dg').datagrid('selectRow',maxrow).datagrid('beginEdit',maxrow);
+
+<table id="dg" style="width:auto;height:auto;border:1px solid#ccc;"></table>
+<script>
+	$('#dg').datagrid({
+		rownumbers:true,
+		showFooter:true,
+		loadMsg:"数据正在加载中...",
+		url:'./GetAllData.php',
+		columns:[[
+			{field:"PName",title:'姓名',editor:'textbox'},
+			{field:"PNo",title:'学号',editor:'textbox'},
+			{field:"PClass",title:'班级',editor:'textbox'},
+			{field:"PPhone",title:'电话',editor:'textbox'},
+			{field:"PBankNo",title:'银行卡号',editor:'textbox'},
+			{field:"PQQ",title:'QQ号',editor:'textbox'},
+			{field:"PWechat",title:'微信号',editor:'textbox'},
+			{field:"PT_Size",title:'T恤大小',editor:'textbox'}
+		]],
+		/*data:[
+            {PName:"徐悦皓",PNo:"1712190114",PClass:"计科1701",PPhone:"13456789",PBankNo:"15645656",PQQ:"10001",PWechat:"wc",PT_Size:"XXXXL"}
+        ],*/
+		//工具栏中添加取消编辑的按钮
+		toolbar:[
+			{
+				iconCls:'icon-add',
+				handler:function(){
+					$("#dg").datagrid('appendRow',['','','','','','','','']);
+					d=$('#dg').datagrid('getRows');
+					var maxrow=0;
+					for(let i in d){
+						maxrow=parseInt(i);
 					}
-				},
-				{
-					iconCls:'icon-edit',
-					handler:function(){
-						var row=$("#dg").datagrid('getSelected');
-						var index=$("#dg").datagrid('getRowIndex',row);
-						$("#dg").datagrid('beginEdit',index);
-					}
-				},
-				{
-					iconCls:'icon-save',
-					handler:function(){
-						var row=$("#dg").datagrid('getSelected');
-						var index=$("#dg").datagrid('getRowIndex',row);
-						var result;
-						$.ajax({
+					console.log(maxrow);
+					$('#dg').datagrid('selectRow',maxrow).datagrid('beginEdit',maxrow);
+				}
+			},
+			{
+				iconCls:'icon-edit',
+				handler:function(){
+					var row=$("#dg").datagrid('getSelected');
+					var index=$("#dg").datagrid('getRowIndex',row);
+					$("#dg").datagrid('beginEdit',index);
+				}
+			},
+			{
+				iconCls:'icon-save',
+				handler:function(){
+					var row=$("#dg").datagrid('getSelected');
+					var index=$("#dg").datagrid('getRowIndex',row);
+					var result;
+					$.ajax({
 						type:'post',
 						async:false,
-						url:'./InsertPerson.php',
+						url:'./EditPerson.php',
 						data:{
-							'PName':row[0],
-							'PNo':row[1],
-							'PClass':row[2],
-							'PPhone':row[3],
-							'PBankNo':row[4],
-							'PQQ':row[5],
-							'PWechat':row[6],
-							'PT_Size':row[7],
+							'PName':row['PName'],
+							'PNo':row['PNo'],
+							'PClass':row['PClass'],
+							'PPhone':row['PPhone'],
+							'PBankNo':row['PBankNo'],
+							'PQQ':row['PQQ'],
+							'PWechat':row['PWechat'],
+							'PT_Size':row['PT_Size'],
 						},
 						success:function(data){
 							result=data;
 						}
-						});
-						if(result==true){
-							$("#dg").datagrid('endEdit',index);
-						}
-						else{
-							$("#dg").datagrid('cancelEdit',index);
-							alert("修改失败");
-						}
-						$("#dg").datagrid('unselectRow',index);
+					});
+					if(result==true){
+						$("#dg").datagrid('endEdit',index);
 					}
-				},
-				{
-					iconCls:'icon-remove',
-					handler:function(){
-						var row=$("#dg").datagrid('getSelected'),result;
-						$.ajax({
-							type:'post',
-							async:false,
-							url:'./DeletePerson.php',
-							data:{
-								"PNo":row[1],
-							},
-							success:function (data) {
-								result=data;
-							}
-						});
-						if(result==true){
-							var index=$("#dg").datagrid('getRowIndex',row);
-							$('#dg').datagrid('deleteRow',index);
-						}
-						else{
-							alert("删除失败");
-						}
-					}
-				},
-				{
-					iconCls:'icon-cancel',
-					handler:function(){
-						var row=$("#dg").datagrid('getSelected');
-						var index=$("#dg").datagrid('getRowIndex',row);
+					else{
 						$("#dg").datagrid('cancelEdit',index);
-						$("#dg").datagrid('unselectRow',index);
+						alert(result);
+						alert("修改失败");
+					}
+					$("#dg").datagrid('unselectRow',index);
+				}
+			},
+			{
+				iconCls:'icon-remove',
+				handler:function(){
+					var row=$("#dg").datagrid('getSelected'),result;
+					$.ajax({
+						type:'post',
+						async:false,
+						url:'./DeletePerson.php',
+						data:{
+							"PNo":row['PNo'],
+						},
+						success:function (data) {
+							result=data;
+						}
+					});
+					if(result==true){
+						var index=$("#dg").datagrid('getRowIndex',row);
+						$('#dg').datagrid('deleteRow',index);
+					}
+					else{
+						alert("删除失败");
 					}
 				}
-				],
-				//双击事件
-				onDblClickRow:function(index,row){
-					//检查当前列是否在编辑模式下
-					//如果在编辑模式下时将会结束编辑
-					if(row.editing){
-						//取消该行选中并结束编辑
-						$(this).datagrid('unselectRow',index)
+			},
+			{
+				iconCls:'icon-cancel',
+				handler:function(){
+					var row=$("#dg").datagrid('getSelected');
+					var index=$("#dg").datagrid('getRowIndex',row);
+					$("#dg").datagrid('cancelEdit',index);
+					$("#dg").datagrid('unselectRow',index);
+				}
+			}
+		],
+		//双击事件
+		onDblClickRow:function(index,row){
+			//检查当前列是否在编辑模式下
+			//如果在编辑模式下时将会结束编辑
+			if(row.editing){
+				//取消该行选中并结束编辑
+				$(this).datagrid('unselectRow',index)
 						.datagrid("endEdit",index);
-					}else{
-						//如果该行不在编辑模式时，选中该行并开启编辑模式
-						//选中该行的目的是为了动态取消编辑时找到指定的行
-						$(this).datagrid('selectRow',index)
+			}else{
+				//如果该行不在编辑模式时，选中该行并开启编辑模式
+				//选中该行的目的是为了动态取消编辑时找到指定的行
+				$(this).datagrid('selectRow',index)
 						.datagrid("beginEdit",index);
-					}				
-				},
-				//开始编辑前先标记该行已被编辑
-				onBeforeEdit:function(index,row){
-					row.editing=true;
-				},
-				//编辑完毕时标记该行未被编辑
-				onAfterEdit:function(index,row){
-					row.editing=false;
-				},
-				//取消编辑时标记该行未被编辑
-				onCancelEdit:function(index,row){
-					row.editing=false;
-				},
-				onSelect:function(index,row){
-					for(let i in row){
-						console.log(row[i]);
-					}
-				}
-		})
-	</script>
+			}
+		},
+		//开始编辑前先标记该行已被编辑
+		onBeforeEdit:function(index,row){
+			row.editing=true;
+		},
+		//编辑完毕时标记该行未被编辑
+		onAfterEdit:function(index,row){
+			row.editing=false;
+		},
+		//取消编辑时标记该行未被编辑
+		onCancelEdit:function(index,row){
+			row.editing=false;
+		},
+		onSelect:function(index,row){
+			for(let i in row){
+				console.log(row[i]);
+			}
+		}
+	})
+</script>
 </body>
 </html>

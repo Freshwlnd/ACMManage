@@ -11,14 +11,14 @@
 </head>
 <body style="background:url(background.jpg);background-size:100% 100%;background-repeat:no-repeat;background-attachment:fixed">
 <div id="p1" style="padding:10px;background:#ccd3d9;color:#000;border-radius:24px;opacity:0.5"><p></p></div>
-	<div id="p" style="padding:10px;background:#b2bdc6;color:#000;border-radius:24px;opacity:0.9" align="center"><p>
-		<div style="margin: 40px 0px"><center><h1>欢迎登陆ACM管理系统</h1></center></div>
-		<div style="margin: 10px 0px"><input id="count" placeholder="请输入你的学号"></div>
-		<div style="margin: 10px 0px"><input id="password"></div>
-		<div style="margin: 50px 5px">
-			<a id="login" style="margin:0px 10px">登陆</a>
-			<a id="signup" style="margin:0px 10px">注册</a>
-		</div>
+<div id="p" style="padding:10px;background:#b2bdc6;color:#000;border-radius:24px;opacity:0.9" align="center"><p>
+	<div style="margin: 40px 0px"><center><h1>欢迎登陆ACM管理系统</h1></center></div>
+	<div style="margin: 10px 0px"><input id="count" placeholder="请输入你的学号"></div>
+	<div style="margin: 10px 0px"><input id="password"></div>
+	<div style="margin: 50px 5px">
+		<a id="login" style="margin:0px 10px">登陆</a>
+		<a id="signup" style="margin:0px 10px">注册</a>
+	</div>
 	</p></div>
 
 <style>
@@ -26,110 +26,133 @@
 		position: absolute;
 	}
 </style>
-	<script>
-		$.extend($.fn.validatebox.defaults.rules,{
-			OnlyNum:{
+<script>
+	$.extend($.fn.validatebox.defaults.rules,{
+		OnlyNum:{
 			validator:function(value){
 				return /^[0-9]{1,}$/.test(value);
 			},
 			message:'只允许输入数字'
-			}
-		});
-		$('#p').panel({
-			width:500,
-			height:350,
-			cls:'pos',
-			//region:'center'
-		})
-		$('#p1').panel({
-			width:1000,
-			height:700,
-			cls:'pos',
-			//region:'center'
-		})
-		$('#count').textbox({
-			required:true,
-			label:'学号',
-			labelPosition:'left',
-			labelAlign:'left',	
-			width:300,
-			cls:'newStyle',
-			validType:['length[10,10]','OnlyNum'],
-			missingMessage:'请输入学号',
-			invalidMessage:'请输入合法的学号',
-			tipPosition:'right',
-			validateOnCreate:false,
-			icons:[
-				{
-					iconCls:'icon-man',
-					disabled:true
-				},
-			],
-			prompt:'请输入你的学号',
-		});
-		$('#password').passwordbox({
-			label:'密码',
-			labelPosition:'left',
-			labelAlign:'left',
-			width:300,
-			prompt:'请输入你的密码',
-			checkInterval:0,
-			showEye:true
-		});
-		$('#login').linkbutton({
-			width:120,
-			group:"bg"
-		})
-		$('#signup').linkbutton({
-			width:120,
-			group:"bg"
-		})
+		}
+	});
+	$('#p').panel({
+		width:500,
+		height:350,
+		cls:'pos',
+		//region:'center'
+	})
+	$('#p1').panel({
+		width:1000,
+		height:700,
+		cls:'pos',
+		//region:'center'
+	})
+	$('#count').textbox({
+		required:true,
+		label:'学号',
+		labelPosition:'left',
+		labelAlign:'left',
+		width:300,
+		cls:'newStyle',
+		validType:['length[10,10]','OnlyNum'],
+		missingMessage:'请输入学号',
+		invalidMessage:'请输入合法的学号',
+		tipPosition:'right',
+		validateOnCreate:false,
+		icons:[
+			{
+				iconCls:'icon-man',
+				disabled:true
+			},
+		],
+		prompt:'请输入你的学号',
+	});
+	$('#password').passwordbox({
+		label:'密码',
+		labelPosition:'left',
+		labelAlign:'left',
+		width:300,
+		prompt:'请输入你的密码',
+		checkInterval:0,
+		showEye:true
+	});
+	$('#login').linkbutton({
+		width:120,
+		group:"bg"
+	})
+	$('#signup').linkbutton({
+		width:120,
+		group:"bg"
+	})
 		$('#login').click(function(){
 			//alert($('#password').textbox('getValue'));
+			var account = $('#count').textbox('getValue');
+			var password = $('#password').textbox('getValue');
+			var result;
+			$.ajax({
+				type: 'post',
+				async : false, //同步请求
+				url: './checkpassword.php',
+				data: {
+					"account": account,
+					"password": password
+				},
+				success: function (data) {
+					result = data;
+				}
+			});
+			if(result==1) {
+				window.location.href="./index.html";
+//				window.location.href="./selectinfo.html";
+			} else {
+				alert(result);
+			}
+		/*
 			if($('#count').textbox('getValue')=='1712190120'&&$('#password').textbox('getValue')=='admin'){
 				window.location.href="./index.html";
 			}
+		*/
 		});
-		$('#signup').click(function(){			
-			window.location.href="./signup.html";
-		});
-		$(function ()
-        {
-            SetCenter();
-            window.onresize = function ()
-            {
-                setTimeout(function () { SetCenter(); }, 100);
-            }
-        });
- 
-        function SetCenter()
-        {
-            var top = ($(window).height() - $('#p').height() - 2) / 2;  // 边框宽度为2
-            var left = ($(window).width() - $('#p').width() - 2) / 2;
- 
-            if (top < 0) top = 0;
-            if (left < 0) left = 0;
- 
-            $('#p').panel('move', { left: left, top: top });  // 可以省略 move 方法
-        }
-        $(function ()
-        {
-            SetCenter_p1();
-            window.onresize = function ()
-            {
-                setTimeout(function () { SetCenter_p1(); }, 100);
-            }
-        });
- 
-        function SetCenter_p1()
-        {
-            //var top = ($(window).height() - $('#p1').height() - 2) / 2;  // 边框宽度为2
-            var left = ($(window).width() - $('#p1').width() - 2) / 2;
- 
-            if (top < 0) top = 0;
-            if (left < 0) left = 0;
- 
-            $('#p1').panel('move', { left: left, top: top });  // 可以省略 move 方法
-        }
-	</script>
+	$('#signup').click(function(){
+		window.location.href="./signup.html";
+	});
+	$(function ()
+	{
+		SetCenter();
+		window.onresize = function ()
+		{
+			setTimeout(function () { SetCenter(); }, 100);
+		}
+	});
+
+	function SetCenter()
+	{
+		var top = ($(window).height() - $('#p').height() - 2) / 2;  // 边框宽度为2
+		var left = ($(window).width() - $('#p').width() - 2) / 2;
+
+		if (top < 0) top = 0;
+		if (left < 0) left = 0;
+
+		$('#p').panel('move', { left: left, top: top });  // 可以省略 move 方法
+	}
+	$(function ()
+	{
+		SetCenter_p1();
+		window.onresize = function ()
+		{
+			setTimeout(function () { SetCenter_p1(); }, 100);
+		}
+	});
+
+	function SetCenter_p1()
+	{
+		//var top = ($(window).height() - $('#p1').height() - 2) / 2;  // 边框宽度为2
+		var left = ($(window).width() - $('#p1').width() - 2) / 2;
+
+		if (top < 0) top = 0;
+		if (left < 0) left = 0;
+
+		$('#p1').panel('move', { left: left, top: top });  // 可以省略 move 方法
+	}
+</script>
 </body>
