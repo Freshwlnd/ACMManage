@@ -49,7 +49,11 @@ if($result->num_rows>0) {
     $result = $conn->query($sql3);
 }
 
-echo $result;
+if($result==TRUE) {
+    echo TRUE;
+} else {
+    echo("错误描述: " . mysqli_error($conn));
+}
 
 $conn->close();
 

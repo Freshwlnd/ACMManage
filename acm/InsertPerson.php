@@ -38,7 +38,11 @@ $sql1 = "INSERT INTO
 //echo $sql1;
 $result = $conn->query($sql1);
 
-echo $result;
+if($result==TRUE) {
+    echo TRUE;
+} else {
+    echo("错误描述: " . mysqli_error($conn));
+}
 
 $conn->close();
 

@@ -25,7 +25,11 @@ $sql1 = "DELETE FROM OfflineContest WHERE OffCNo='$OffCNo'";
 
 $result = $conn->query($sql1);
 
-echo $result;
+if($result==TRUE) {
+    echo TRUE;
+} else {
+    echo("错误描述: " . mysqli_error($conn));
+}
 
 $conn->close();
 
