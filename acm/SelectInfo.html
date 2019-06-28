@@ -44,9 +44,9 @@
         }
     });
     $('#panelC1').panel({
-        width: 350,
+        width: 700,
         height: 450,
-        left: 900,
+        left: 700,
         top: 180,
         style: {
             'position': 'absolute'
@@ -104,19 +104,23 @@
             }
         });
         result = JSON.parse(result);
-        title = "";
-        for (var i in result) {
-            title = title + ("<div>" + result[i]['比赛时间'] + "</div>" +
-                "<div>" + result[i]['比赛地点'] + "</div>" +
-                "<div>" + result[i]['比赛名'] + "</div>" +
-                "<div>" + result[i]['获奖情况'] + "</div>" +
-                "<div>" + result[i]['队员1'] + "</div>" +
-                "<div>" + result[i]['队员2'] + "</div>" +
-                "<div>" + result[i]['队员3'] + "</div>");
+        if(result['error']!=null) {
+            alert(result['error']);
+        } else {
+            title = "";
+            for (var i in result) {
+                title = title + ("<center><div>" + disp(4) + result[i]['比赛时间'] + "参加了在"
+                    + result[i]['比赛地点'] + "举办的大学生程序设计竞赛"
+                    + result[i]['比赛名'] + "获得了"
+                    + result[i]['获奖情况']
+                    + "，参赛队员有：" + "</div></center>" + "<center><div>" + disp(4) + result[i]['队员1'] + disp(5)
+                    + result[i]['队员2'] + disp(5)
+                    + result[i]['队员3'] + "</div></center>" + "<br/>");
+            }
+            $('#panelC1').panel('clear');
+            $('#panelC1').append(title);
+            $('#panelC1').show()
         }
-        $('#panelC1').panel('clear');
-        $('#panelC1').append(title);
-        $('#panelC1').show()
     });
     //修改文本框样式
     function changeCSS(mInfo) {
