@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>信息维护</title>
+    <link rel="stylesheet" type="text/css" href="../themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="../demo/demo.css">
+    <script type="text/javascript" src="../jquery.min.js"></script>
+    <script type="text/javascript" src="../jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../../jquery.easyui.mobile.js"></script>
+    <script type="text/javascript" src="../../jquery.easyui.easyloader.js"></script>
+</head>
+<body style="background-color:azure">
+    
+    <div id="panelP" class="easyui-panel" style="background-color:aliceblue;">
+
+        <div id="panelC" class="easyui-panel" style="background-color:antiquewhite;float:left">
+            <br />
+
+        </div>
+        <div id="panelC1" class="easyui-panel" style="background-color:antiquewhite;float:right">
+
+        </div>
+        <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+        <br /><br />
+        <center><a id="buttonChange" class="easyui-linkbutton" onclick="">修改信息</a></center>
+    </div>
+
+
+    <script>
+        $('#panelP').panel({
+            width: 1510,
+            height: 738,
+        });
+        $('#panelC').panel({
+            width: 350,
+            height: 450,
+            left: 300,
+            top:220,
+            style: {
+                'position':'absolute'
+            }
+        });
+        $('#panelC1').panel({
+            width: 350,
+            height: 450,
+            left: 900,
+            top: 220,
+            style: {
+                'position': 'absolute'
+            }
+        });
+        $('#buttonChange').linkbutton({
+            width:100,
+        });
+        function disp(num) {
+            var re = "";
+            for (var x = 0; x < num; ++x) {
+                re += "&nbsp";
+            }
+            return re;
+        }
+        $(function getInfo() {
+            var result;
+            $.ajax({
+                type: "post",
+                async: false,
+                url: './GetOneselfData.php',
+                success: function (data,statu) {
+                    result = data;
+                }
+            });
+            result = '{ "PNo": "1712190113", "PName": "\u9f9a\u70af\u8fbe", "PSex": null, "PClass": "\u8ba1\u79d11701", "PBankNo": "2i348y432", "PHeight": null, "PPhone": "1737656xxxx", "PQQ": "89237498i", "PWechat": "89yfkdsh", "PT_Size": "M", "PSignNo": null, "PHdu": null, "PWeight": null, "PSingle": null, "PPassword": "e10adc3949ba59abbe56e057f20f883e" }';
+            result = JSON.parse(result);
+            var title = $("<div style='margin: 15px 100px'>"+"学号: " + disp(4)+ result.PNo + "</div>" +
+                "<div style='margin: 15px 100px'>" + "姓名: " + disp(4) + result.PName + "</div>" +
+                "<div style='margin: 15px 100px'>" + "性别: " + disp(4) + result.PSex + "</div>" +
+                "<div style='margin: 15px 100px'>" + "班级: " + disp(4) + result.PClass + "</div>" +
+                "<div style='margin: 15px 72px'>" + "电话号码: " + disp(4) + result.PPhone + "</div>" +
+                "<div style='margin: 15px 105px'>" + "QQ: " + disp(4) + result.PQQ + "</div>" +
+                "<div style='margin: 15px 100px'>" + "微信: " + disp(4) + result.PWechat + "</div>" +
+                "<div style='margin: 15px 72px'>" + "银行卡号: " + disp(4) + result.PBankNo + "</div>" +
+                "<div style='margin: 15px 72px'>" + "T-恤尺码: " + disp(4) + result.PT_Size + "</div>" +
+                "<div style='margin: 15px 72px'>" + "杭电账号: " + disp(4) + result.PHdu + "</div>" +
+                "<div style='margin: 15px 100px'>" + "座位: " + disp(4) + result.PSignNo + "</div>")
+            $('#panelC').append(title);
+            $('#panelC').show();
+        })
+        window.onload = getInfo();
+    </script>
+</body>
+</html>
