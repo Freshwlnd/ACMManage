@@ -22,26 +22,31 @@ if (isset($_COOKIE["user"])){
 
     $outt = array();
 
-    while($row=$result->fetch_assoc()) {
-        if($row['GoldMedal']==1) {
-            $row['获奖情况']='金牌';
-        } elseif ($row['SilverMedal']==1) {
-            $row['获奖情况']='银牌';
-        } elseif ($row['BrozeMedal']==1) {
-            $row['获奖情况']='铜牌';
-        } else {
-            $row['获奖情况']='铁牌';
+    if($result->num_rows>0) {
+        while($row=$result->fetch_assoc()) {
+            if($row['GoldMedal']==1) {
+                $row['获奖情况']='金牌';
+            } elseif ($row['SilverMedal']==1) {
+                $row['获奖情况']='银牌';
+            } elseif ($row['BrozeMedal']==1) {
+                $row['获奖情况']='铜牌';
+            } else {
+                $row['获奖情况']='铁牌';
+            }
+            $PNo1 = $row['PNo1'];
+            $sql2 = "SELECT PName FROM person WHERE PNo='$PNo1'";
+            $row['队员1']=$conn->query($sql2)->fetch_row()[0];
+            $PNo2 = $row['PNo2'];
+            $sql2 = "SELECT PName FROM person WHERE PNo='$PNo2'";
+            $row['队员2']=$conn->query($sql2)->fetch_row()[0];
+            $PNo3 = $row['PNo3'];
+            $sql2 = "SELECT PName FROM person WHERE PNo='$PNo3'";
+            $row['队员3']=$conn->query($sql2)->fetch_row()[0];
+            array_push($outt, $row);
         }
-        $PNo1 = $row['PNo1'];
-        $sql2 = "SELECT PName FROM person WHERE PNo='$PNo1'";
-        $row['队员1']=$conn->query($sql2)->fetch_row()[0];
-        $PNo2 = $row['PNo2'];
-        $sql2 = "SELECT PName FROM person WHERE PNo='$PNo2'";
-        $row['队员2']=$conn->query($sql2)->fetch_row()[0];
-        $PNo3 = $row['PNo3'];
-        $sql2 = "SELECT PName FROM person WHERE PNo='$PNo3'";
-        $row['队员3']=$conn->query($sql2)->fetch_row()[0];
-        $outt.array_push($outt, $row);
+    } else {
+
+        $outt['error']= '暂无获奖信息';
     }
 
 } else {

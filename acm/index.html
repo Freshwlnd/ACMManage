@@ -13,41 +13,48 @@
 	<body style="background:url('background.jpg');background-size:100% 100%;background-repeat:no-repeat;background-attachment:fixed">
 	<center><h1>ACM内部信息管理系统</h1></center>
 		<div align="right"><u>
-			<p id="p1" style="color: #fff">游客</p>
+			<em id="p1" style="color: #fff">游客</em>
 			<a id="logout" style="margin:0px 10px">Log Out</a>
 		</u></div>
 		<div id="tt" style= "opacity:0.9">
 			<div title="首页" href="./homepage.html"></div>
 			<div title="信息维护" href="./maintain.html"></div>
 			<div title="信息查询" href="./query.html"></div>
-			<div title="个人申请" href="./selectinfo.html"></div>
+			<div title="个人申请"></div>
 			<div title="事务公告"></div>
 			<div title="队内排名"></div>
 		</div>
 		<script>
-			$(function(){
-				$('#tt').tabs({
-					width:"1500",
-					height:"800",
-					justified:"true"
-				});
+			$('#tt').tabs({
+				width:'auto',
+				height:"800",
+				justified:"true"
 			});
 			function GetPNo() {
+				var result;
 				$.ajax({
 					type: 'post',
 					async : false, //同步请求
 					url: './GetPNo.php',
 					data: {},
 					success: function (data) {
+						result=data;
 						document.getElementById("p1").innerHTML=data;
 					}
-				})
+				});
+				if(result==='游客'){
+					$('#logout').click(login);
+					$('#logout').linkbutton({text:'Log In'});
+				}else{
+					$('#logout').click(logout);
+				}
 			}
 			$('#logout').linkbutton({
-				width:120,
+				width:70,
+				size:'small',
 				group:"bg"
 			})
-			$('#logout').click(function(){
+			var logout=function(){
 				$.ajax({
 					type: 'post',
 					url: './LogOut.php',
@@ -60,7 +67,10 @@
 						}
 					}
 				});
-			});
+			}
+			var login=function(){
+				window.location.href="./login.html";
+			}
 		</script>
 	</body>
 </html>

@@ -14,6 +14,7 @@
         <div id="p" style="padding:10px;background:#99a7b4;color:#000;border-radius:24px;font:'Droid Sans'" align="center"><p>
             <center><h1>ACM集训队队员注册</h1></center>
             <div align="center" style="margin: 10px 0px"><input id="PName"></div>
+            <div align="center" style="margin: 10px 0px"><input id="PSex"></div>
             <div align="center" style="margin: 10px 0px"><input id="PNo"></div>
             <div align="center" style="margin: 10px 0px"><input id="password"></div>
             <div align="center" style="margin: 10px 0px"><input id="confirmpassword"></div>
@@ -54,6 +55,20 @@
                 tipPosition:'right',
                 validateOnCreate:false
             });
+            $('#PSex').combobox({
+                valueField:'sex',
+                textField:'sex',
+                width:'300',
+                required:true,
+                validateOnCreate:false,
+                label:'*性别',
+                labelPosition:'left',
+                labelAlign:'left',
+                data:[
+                    {"sex":"男","sex":"男"},
+                    {"sex":"女","sex":"女"},
+                ]
+            })
             $('#PNo').textbox({
                 required:true,
                 label:'*学号',
@@ -67,7 +82,7 @@
             });
             $('#password').passwordbox({
                 required:true,
-                label:'密码',
+                label:'*密码',
                 labelPosition:'left',
                 labelAlign:'left',
                 width:300,
@@ -79,7 +94,7 @@
             });
             $('#confirmpassword').passwordbox({
                 required:true,
-                label:'确认密码',
+                label:'*确认密码',
                 labelPosition:'left',
                 labelAlign:'left',
                 width:300,
@@ -88,6 +103,7 @@
                 showEye:true,
                 validType:"equals['#password']",
                 missingMessage:'确认密码不能为空',
+                invalidMessage:"两次输入密码不匹配",
                 tipPosition:'right',
                 validateOnCreate:false,
             });
@@ -158,7 +174,7 @@
             $('#commit').linkbutton({
                 width:150
             })
-            function insert(PName,PNo,PClass,PPhone,PBankNo,PQQ,PWechat,PT_Size){
+            function insert(PName,PSex,PNo,PClass,PPhone,PBankNo,PQQ,PWechat,PT_Size){
                 var result;
                 $.ajax({
                     type:'post',
@@ -166,6 +182,7 @@
                     url:'./InsertPerson.php',
                     data:{
                         'PName':PName,
+                        'PSex':PSex,
                         'PNo':PNo,
                         'PClass':PClass,
                         'PPhone':PPhone,
@@ -234,13 +251,15 @@
 
                 $('#p1').panel('move', { left: left, top: top });  // 可以省略 move 方法
             };
-            $.extend($.fn.validatebox.defaults.rules,{
-                equals:{
+            $.extend($.fn.validatebox.defaults.rules, {  
+                /*必须和某个字段相等*/
+                equals: {
                     validator:function(value,param){
-                        return value==$(param[0]).getValue();
-                    }
-                },
-                message:'两次密码输入不一致'
+                        return $(param[0]).val() == value;
+                    },
+                    message:'两次密码输入不一致'
+                }
+                       
             });
         </script>
     </body>
