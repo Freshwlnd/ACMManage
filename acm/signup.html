@@ -15,6 +15,8 @@
             <center><h1>ACM集训队队员注册</h1></center>
             <div align="center" style="margin: 10px 0px"><input id="PName"></div>
             <div align="center" style="margin: 10px 0px"><input id="PNo"></div>
+            <div align="center" style="margin: 10px 0px"><input id="password"></div>
+            <div align="center" style="margin: 10px 0px"><input id="confirmpassword"></div>
             <div align="center" style="margin: 10px 0px"><input id="PClass"></div>
             <div align="center" style="margin: 10px 0px"><input id="PPhone"></div>
             <div align="center" style="margin: 10px 0px"><input id="PBankNo"></div>
@@ -62,6 +64,32 @@
                 missingMessage:'学号不能为空',
                 tipPosition:'right',
                 validateOnCreate:false
+            });
+            $('#password').passwordbox({
+                required:true,
+                label:'密码',
+                labelPosition:'left',
+                labelAlign:'left',
+                width:300,
+                prompt:'请输入你的密码',
+                missingMessage:'密码不能为空',
+                checkInterval:0,
+                showEye:true,
+                validateOnCreate:false,
+            });
+            $('#confirmpassword').passwordbox({
+                required:true,
+                label:'确认密码',
+                labelPosition:'left',
+                labelAlign:'left',
+                width:300,
+                prompt:'请确认你的密码',
+                checkInterval:0,
+                showEye:true,
+                validType:"equals['#password']",
+                missingMessage:'确认密码不能为空',
+                tipPosition:'right',
+                validateOnCreate:false,
             });
             $('#PClass').textbox({
                 label:'班级',
@@ -205,7 +233,15 @@
                 if (left < 0) left = 0;
 
                 $('#p1').panel('move', { left: left, top: top });  // 可以省略 move 方法
-            }
+            };
+            $.extend($.fn.validatebox.defaults.rules,{
+                equals:{
+                    validator:function(value,param){
+                        return value==$(param[0]).getValue();
+                    }
+                },
+                message:'两次密码输入不一致'
+            });
         </script>
     </body>
 </html>

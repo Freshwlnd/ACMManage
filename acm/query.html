@@ -60,6 +60,7 @@
 					var row=$("#dg").datagrid('getSelected');
 					var index=$("#dg").datagrid('getRowIndex',row);
 					var result;
+					$("#dg").datagrid('endEdit',index);
 					$.ajax({
 						type:'post',
 						async:false,
@@ -79,10 +80,10 @@
 						}
 					});
 					if(result==true){
-						$("#dg").datagrid('endEdit',index);
+						//$("#dg").datagrid('endEdit',index);
 					}
 					else{
-						$("#dg").datagrid('cancelEdit',index);
+						$("#dg").datagrid('updateRow',index,row);
 						alert(result);
 						alert("修改失败");
 					}
