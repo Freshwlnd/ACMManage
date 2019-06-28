@@ -12,14 +12,7 @@ if ($conn->connect_error) {
     die("连接失败: " . $conn->connect_error);
 }
 
-$OnCNo = 100000000;
-
-$sql1 = "SELECT * FROM OnlineContest";
-
-$result = $conn->query($sql1);
-
-$OnCNo = $OnCNo + $result->num_rows - 1;
-$OnCNo = "OnC".substr($OnCNo,1);
+$OnCNo = $_POST['OnCNo'];
 
 $sql1 = "DELETE FROM OnlineContest WHERE OnCNo='$OnCNo'";
 

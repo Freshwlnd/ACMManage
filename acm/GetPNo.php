@@ -15,6 +15,7 @@ if ($conn->connect_error) {
 $PNo = '1712190120';
 
 if (isset($_COOKIE["user"])){
+
     $PNo = $_COOKIE["user"];
     $sql1 = "SELECT PNo, PName FROM person WHERE PNo='$PNo'";
     $result = $conn->query($sql1);
@@ -22,7 +23,9 @@ if (isset($_COOKIE["user"])){
     echo $row['PNo'] . " " . $row['PName'];
 
 } else {
+
     echo '游客';
+
 }
 
 ?>

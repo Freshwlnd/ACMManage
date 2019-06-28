@@ -30,9 +30,7 @@ if ($IsAdmin) {
 
 } else {
 
-    $sql2 = "SELECT PName, PNo, PClass, PPhone, PBankNo, PQQ, PWechat, PT_Size FROM person";
-    $result = $conn->query($sql2);
-    echo json_encode($result->fetch_all(MYSQLI_ASSOC));
+    echo json_encode("{'error':'权限不足！'}");
 
 }
 

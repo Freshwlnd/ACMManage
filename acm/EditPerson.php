@@ -33,26 +33,51 @@ $sql1 = "SELECT * FROM person WHERE PNo='$PNo'";
 $sql2 = "UPDATE person
     SET
     PName='$PName', PClass='$PClass', PBankNo='$PBankNo', PPhone='$PPhone',
-    PQQ='$PQQ', PWechat='$PWechat', PT_Size='$PT_Size', PPassword='$PPassword'
+    PQQ='$PQQ', PWechat='$PWechat', PT_Size='$PT_Size'
     WHERE PNo='$PNo'";
 $sql3 = "INSERT INTO
     person(PNo, PName, PClass, PBankNo, PPhone, PQQ, PWechat, PT_Size, PPassword)
      Value ('$PNo', '$PName', '$PClass', '$PBankNo', '$PPhone', '$PQQ', '$PWechat', '$PT_Size', '$PPassword')";
 
-//echo $sql2;
+
+$IsAdmin = false;
+
+if (isset($_COOKIE["user"])){
+    $PNo0 = $_COOKIE["user"];
+    $sql1 = "SELECT PAdmin FROM person WHERE PNo='$PNo0'";
+    $result = $conn->query($sql1);
+    $row = mysqli_fetch_assoc($result);
+    $IsAdmin = $row['PAdmin'];
+}
 
 $result = $conn->query($sql1);
 
 if($result->num_rows>0) {
-    $result = $conn->query($sql2);
-} else {
-    $result = $conn->query($sql3);
-}
+    if($IsAdmin==false && $PNo!=$PNo0) {
+        echo "权限不足！";
+    } else {
+        $result = $conn->query($sql2);
 
-if($result==TRUE) {
-    echo TRUE;
+        if($result==TRUE) {
+            echo TRUE;
+        } else {
+            echo("错误描述: " . mysqli_error($conn));
+        }
+
+    }
 } else {
-    echo("错误描述: " . mysqli_error($conn));
+    if($IsAdmin==false) {
+        echo "权限不足！";
+    } else {
+        $result = $conn->query($sql3);
+
+        if($result==TRUE) {
+            echo TRUE;
+        } else {
+            echo("错误描述: " . mysqli_error($conn));
+        }
+
+    }
 }
 
 $conn->close();
