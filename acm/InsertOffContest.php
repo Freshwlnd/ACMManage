@@ -11,7 +11,6 @@ if ($conn->connect_error) {
     die("连接失败: " . $conn->connect_error);
 }
 
-$OffCNo = 100000000;
 //$OffCName = '西安邀请赛';
 //$University = '西安';
 //$Expend = '2000';
@@ -21,23 +20,35 @@ $University = $_POST['University'];
 $Expend = $_POST['Expend'];
 $Time = $_POST['Time'];
 
-$sql1 = "SELECT * FROM OfflineContest";
+$sql1 = "INSERT INTO
+    OfflineContest(OffCName, University, Expend, Time)
+     Value ('$OffCName', '$University', '$Expend', '$Time')";
 
-$result = $conn->query($sql1);
 
-$OffCNo = $OffCNo + $result->num_rows;
-$OffCNo = "OffC".substr($OffCNo,1);
+$IsAdmin = false;
 
-$sql2 = "INSERT INTO
-    OfflineContest(OffCNo, OffCName, University, Expend, Time)
-     Value ('$OffCNo', '$OffCName', '$University', '$Expend', '$Time')";
+if (isset($_COOKIE["user"])){
+    $PNo0 = $_COOKIE["user"];
+    $sql1 = "SELECT PAdmin FROM person WHERE PNo='$PNo0'";
+    $result = $conn->query($sql1);
+    $row = mysqli_fetch_assoc($result);
+    $IsAdmin = $row['PAdmin'];
+}
 
-$result = $conn->query($sql2);
+if ($IsAdmin) {
 
-if($result==TRUE) {
-    echo TRUE;
+    $result = $conn->query($sql1);
+
+    if ($result == TRUE) {
+        echo TRUE;
+    } else {
+        echo("错误描述: " . mysqli_error($conn));
+    }
+
 } else {
-    echo("错误描述: " . mysqli_error($conn));
+
+    echo "权限不足！";
+
 }
 
 $conn->close();

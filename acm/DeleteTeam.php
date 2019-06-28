@@ -2,7 +2,7 @@
 
 $servername = "127.0.0.1";
 $username0 = "root";
-$password0 = "";
+$password0 = "root";
 $dbname = "ACMInfo";
 
 // 创建连接
@@ -12,20 +12,35 @@ if ($conn->connect_error) {
     die("连接失败: " . $conn->connect_error);
 }
 
-$TNo = 100000000;
+$IsAdmin = false;
 
-$sql1 = "SELECT * FROM Team";
+if (isset($_COOKIE["user"])){
+    $PNo0 = $_COOKIE["user"];
+    $sql1 = "SELECT PAdmin FROM person WHERE PNo='$PNo0'";
+    $result = $conn->query($sql1);
+    $row = mysqli_fetch_assoc($result);
+    $IsAdmin = $row['PAdmin'];
+}
 
-$result = $conn->query($sql1);
+if ($IsAdmin) {
 
-$TNo = $TNo + $result->num_rows - 1;
-$TNo = "T".substr($TNo,1);
+    $TNo = $_POST['TNo'];
 
-$sql1 = "DELETE FROM Team WHERE TNo='$TNo'";
+    $sql1 = "DELETE FROM Team WHERE TNo='$TNo'";
 
-$result = $conn->query($sql1);
+    $result = $conn->query($sql1);
 
-echo $result;
+    if ($result == TRUE) {
+        echo TRUE;
+    } else {
+        echo("错误描述: " . mysqli_error($conn));
+    }
+
+} else {
+
+    echo "权限不足！";
+
+}
 
 $conn->close();
 

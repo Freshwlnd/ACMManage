@@ -28,14 +28,10 @@ $PT_Size = $_POST['PT_Size'];
 //$PSingle = $_POST['PSingle'];
 $PPassword = md5('123456');
 
-//$sql1 = "INSERT INTO
-//    person(PNo, PName, PSex, PClass, PBankNo, PHeight, PPhone, PQQ, PWechat, PT_Size, PSignNo, PHdu, PWeight, PSingle, PPassword)
-//     Value ('$PNo', '$PName', '$PSex', '$PClass', '$PBankNo', '$PHeight', '$PPhone', '$PQQ', '$PWechat', '$PT_Size', '$PSignNo', '$PHdu', '$PWeight', '$PSingle', '$PPassword')";
-
 $sql1 = "INSERT INTO
     person(PNo, PName, PClass, PBankNo, PPhone, PQQ, PWechat, PT_Size, PPassword)
      Value ('$PNo', '$PName', '$PClass', '$PBankNo', '$PPhone', '$PQQ', '$PWechat', '$PT_Size', '$PPassword')";
-//echo $sql1;
+
 $result = $conn->query($sql1);
 
 if($result==TRUE) {

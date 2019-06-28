@@ -12,30 +12,34 @@ if ($conn->connect_error) {
     die("连接失败: " . $conn->connect_error);
 }
 
-$PNo = $_POST['PNo'];
-$PName = $_POST['PName'];
-//$PSex = $_POST['PSex'];
-$PClass = $_POST['PClass'];
-$PBankNo = $_POST['PBankNo'];
-//$PHeight = $_POST['PHeight'];
-$PPhone = $_POST['PPhone'];
-$PQQ = $_POST['PQQ'];
-$PWechat = $_POST['PWechat'];
-$PT_Size = $_POST['PT_Size'];
-//$PSignNo = $_POST['PSignNo'];
-//$PHdu = $_POST['PHdu'];
-//$PWeight = $_POST['PWeight'];
-//$PSingle = $_POST['PSingle'];
-$PPassword = md5('123456');
+$IsAdmin = false;
 
-$sql1 = "DELETE FROM person WHERE PNo='$PNo'";
+if (isset($_COOKIE["user"])){
+    $PNo0 = $_COOKIE["user"];
+    $sql1 = "SELECT PAdmin FROM person WHERE PNo='$PNo0'";
+    $result = $conn->query($sql1);
+    $row = mysqli_fetch_assoc($result);
+    $IsAdmin = $row['PAdmin'];
+}
 
-$result = $conn->query($sql1);
+if ($IsAdmin) {
 
-if($result==TRUE) {
-    echo TRUE;
+    $PNo = $_POST['PNo'];
+
+    $sql1 = "DELETE FROM person WHERE PNo='$PNo'";
+
+    $result = $conn->query($sql1);
+
+    if ($result == TRUE) {
+        echo TRUE;
+    } else {
+        echo("错误描述: " . mysqli_error($conn));
+    }
+
 } else {
-    echo("错误描述: " . mysqli_error($conn));
+
+    echo "权限不足！";
+
 }
 
 $conn->close();

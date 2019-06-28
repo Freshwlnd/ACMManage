@@ -32,7 +32,7 @@ if ($IsAdmin) {
 
 } else {
 
-    $sql2 = "SELECT PNo, PName, PSex, PClass, PBankNo, PHeight, PPhone, PQQ, PWechat, PT_Size, PSignNo, PHdu, PWeight, PSingle, PPassword FROM person WHERE PNo='$PNo1'";
+    $sql2 = "SELECT PNo, PName, PSex, PClass, PBankNo, PHeight, PPhone, PQQ, PWechat, PT_Size, PSignNo, PHdu, PWeight, PSingle FROM person WHERE PNo='$PNo1'";
     $result = $conn->query($sql2);
     echo json_encode(mysqli_fetch_assoc($result));
 

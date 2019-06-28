@@ -24,14 +24,26 @@ if (isset($_COOKIE["user"])){
 
 if ($IsAdmin) {
 
-    $sql2 = "SELECT  PName, PNo, PSex, PClass, PBankNo, PHeight, PPhone, PQQ, PWechat, PT_Size, PSignNo, PHdu, PWeight, PSingle FROM person";
+    $Title = $_POST['Title'];
+    $Content = $_POST['Content'];
+    $Time = $_POST['Time'];
+
+    $sql2 = "UPDATE Announcement SET Title='$Title', Content='$Content' WHERE Time='$Time')";
+
     $result = $conn->query($sql2);
-    echo json_encode($result->fetch_all(MYSQLI_ASSOC));
+
+    if ($result == TRUE) {
+        echo TRUE;
+    } else {
+        echo("错误描述: " . mysqli_error($conn));
+    }
 
 } else {
 
-    echo json_encode("{'error':'权限不足！'}");
+    echo "权限不足！";
 
 }
+
+$conn->close();
 
 ?>

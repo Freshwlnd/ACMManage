@@ -12,23 +12,34 @@ if ($conn->connect_error) {
     die("连接失败: " . $conn->connect_error);
 }
 
-$OffCNo = 100000000;
+$IsAdmin = false;
 
-$sql1 = "SELECT * FROM OfflineContest";
+if (isset($_COOKIE["user"])){
+    $PNo0 = $_COOKIE["user"];
+    $sql1 = "SELECT PAdmin FROM person WHERE PNo='$PNo0'";
+    $result = $conn->query($sql1);
+    $row = mysqli_fetch_assoc($result);
+    $IsAdmin = $row['PAdmin'];
+}
 
-$result = $conn->query($sql1);
+if ($IsAdmin) {
 
-$OffCNo = $OffCNo + $result->num_rows - 1;
-$OffCNo = "OffC".substr($OffCNo,1);
+    $OffCNo = $_POST['OffCNo'];
 
-$sql1 = "DELETE FROM OfflineContest WHERE OffCNo='$OffCNo'";
+    $sql1 = "DELETE FROM OfflineContest WHERE OffCNo='$OffCNo'";
 
-$result = $conn->query($sql1);
+    $result = $conn->query($sql1);
 
-if($result==TRUE) {
-    echo TRUE;
+    if ($result == TRUE) {
+        echo TRUE;
+    } else {
+        echo("错误描述: " . mysqli_error($conn));
+    }
+
 } else {
-    echo("错误描述: " . mysqli_error($conn));
+
+    echo "权限不足！";
+
 }
 
 $conn->close();

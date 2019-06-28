@@ -1,5 +1,4 @@
 <?php
-
 $servername = "127.0.0.1";
 $username0 = "root";
 $password0 = "root";
@@ -24,14 +23,31 @@ if (isset($_COOKIE["user"])){
 
 if ($IsAdmin) {
 
-    $sql2 = "SELECT  PName, PNo, PSex, PClass, PBankNo, PHeight, PPhone, PQQ, PWechat, PT_Size, PSignNo, PHdu, PWeight, PSingle FROM person";
+    $DDTNo = $_POST['DDTNo'];
+    $PNo1 = $_POST['PNo1'];
+    $PNo2 = $_POST['PNo2'];
+    $PNo3 = $_POST['PNo3'];
+    $PNo4 = $_POST['PNo4'];
+    $PNo5 = $_POST['PNo5'];
+
+    $sql2 = "INSERT INTO
+        DailyDutyTeam(DDTNo, PNo1, PNo2, PNo3, PNo4, PNo5)
+         Value ('$DDTNo', '$PNo1', '$PNo2', '$PNo3', '$PNo4', '$PNo5')";
+
     $result = $conn->query($sql2);
-    echo json_encode($result->fetch_all(MYSQLI_ASSOC));
+
+    if ($result == TRUE) {
+        echo TRUE;
+    } else {
+        echo("错误描述: " . mysqli_error($conn));
+    }
 
 } else {
 
-    echo json_encode("{'error':'权限不足！'}");
+    echo "权限不足！";
 
 }
+
+$conn->close();
 
 ?>

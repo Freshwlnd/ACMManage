@@ -22,16 +22,6 @@ if (isset($_COOKIE["user"])){
     $IsAdmin = $row['PAdmin'];
 }
 
-if ($IsAdmin) {
-
-    $sql2 = "SELECT  PName, PNo, PSex, PClass, PBankNo, PHeight, PPhone, PQQ, PWechat, PT_Size, PSignNo, PHdu, PWeight, PSingle FROM person";
-    $result = $conn->query($sql2);
-    echo json_encode($result->fetch_all(MYSQLI_ASSOC));
-
-} else {
-
-    echo json_encode("{'error':'权限不足！'}");
-
-}
+echo ($IsAdmin);
 
 ?>

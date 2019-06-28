@@ -11,7 +11,6 @@ if ($conn->connect_error) {
     die("连接失败: " . $conn->connect_error);
 }
 
-$OnCNo = 100000000;
 //$OJName = "HDU";
 //$OnCName = "多效训练赛1";
 //$Time = '2019-6-28';
@@ -19,23 +18,34 @@ $OJName = $_POST['OJName'];
 $OnCName = $_POST['OnCName'];
 $Time = $_POST['Time'];
 
-$sql1 = "SELECT * FROM OnlineContest";
+$IsAdmin = false;
 
-$result = $conn->query($sql1);
+if (isset($_COOKIE["user"])){
+    $PNo0 = $_COOKIE["user"];
+    $sql1 = "SELECT PAdmin FROM person WHERE PNo='$PNo0'";
+    $result = $conn->query($sql1);
+    $row = mysqli_fetch_assoc($result);
+    $IsAdmin = $row['PAdmin'];
+}
 
-$OnCNo = $OnCNo + $result->num_rows;
-$OnCNo = "OnC".substr($OnCNo,1);
+if ($IsAdmin) {
 
-$sql2 = "INSERT INTO
-    OnlineContest(OnCNo, OJName, OnCName, Time)
-     Value ('$OnCNo', '$OJName', '$OnCName', '$Time')";
+    $sql2 = "INSERT INTO
+        OnlineContest(OnCNo, OJName, OnCName, Time)
+         Value ('$OnCNo', '$OJName', '$OnCName', '$Time')";
 
-$result = $conn->query($sql2);
+    $result = $conn->query($sql2);
 
-if($result==TRUE) {
-    echo TRUE;
+    if ($result == TRUE) {
+        echo TRUE;
+    } else {
+        echo("错误描述: " . mysqli_error($conn));
+    }
+
 } else {
-    echo("错误描述: " . mysqli_error($conn));
+
+    echo "权限不足！";
+
 }
 
 $conn->close();
