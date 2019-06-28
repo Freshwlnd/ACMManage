@@ -24,11 +24,13 @@ if (isset($_COOKIE["user"])){
 
 if ($IsAdmin) {
 
-    $OnCNo = $_POST['OnCNo'];
+    $Title = $_POST['Title'];
+    $Content = $_POST['Content'];
+    $Time = $_POST['Time'];
 
-    $sql1 = "DELETE FROM OnlineContest WHERE OnCNo='$OnCNo'";
+    $sql2 = "UPDATE Announcement SET Title='$Title', Content='$Content' WHERE Time='$Time')";
 
-    $result = $conn->query($sql1);
+    $result = $conn->query($sql2);
 
     if ($result == TRUE) {
         echo TRUE;

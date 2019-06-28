@@ -12,16 +12,34 @@ if ($conn->connect_error) {
     die("连接失败: " . $conn->connect_error);
 }
 
-$TNo = $_POST['TNo'];
+$IsAdmin = false;
 
-$sql1 = "DELETE FROM Team WHERE TNo='$TNo'";
+if (isset($_COOKIE["user"])){
+    $PNo0 = $_COOKIE["user"];
+    $sql1 = "SELECT PAdmin FROM person WHERE PNo='$PNo0'";
+    $result = $conn->query($sql1);
+    $row = mysqli_fetch_assoc($result);
+    $IsAdmin = $row['PAdmin'];
+}
 
-$result = $conn->query($sql1);
+if ($IsAdmin) {
 
-if($result==TRUE) {
-    echo TRUE;
+    $TNo = $_POST['TNo'];
+
+    $sql1 = "DELETE FROM Team WHERE TNo='$TNo'";
+
+    $result = $conn->query($sql1);
+
+    if ($result == TRUE) {
+        echo TRUE;
+    } else {
+        echo("错误描述: " . mysqli_error($conn));
+    }
+
 } else {
-    echo("错误描述: " . mysqli_error($conn));
+
+    echo "权限不足！";
+
 }
 
 $conn->close();

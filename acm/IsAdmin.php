@@ -22,26 +22,6 @@ if (isset($_COOKIE["user"])){
     $IsAdmin = $row['PAdmin'];
 }
 
-if ($IsAdmin) {
-
-    $OnCNo = $_POST['OnCNo'];
-
-    $sql1 = "DELETE FROM OnlineContest WHERE OnCNo='$OnCNo'";
-
-    $result = $conn->query($sql1);
-
-    if ($result == TRUE) {
-        echo TRUE;
-    } else {
-        echo("错误描述: " . mysqli_error($conn));
-    }
-
-} else {
-
-    echo "权限不足！";
-
-}
-
-$conn->close();
+echo ($IsAdmin);
 
 ?>

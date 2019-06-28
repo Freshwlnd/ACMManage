@@ -24,9 +24,9 @@ if (isset($_COOKIE["user"])){
 
 if ($IsAdmin) {
 
-    $OnCNo = $_POST['OnCNo'];
+    $DDTNo = $_POST['DDTNo'];
 
-    $sql1 = "DELETE FROM OnlineContest WHERE OnCNo='$OnCNo'";
+    $sql1 = "DELETE FROM DailyDutyTeam WHERE DDTNo='$DDTNo'";
 
     $result = $conn->query($sql1);
 

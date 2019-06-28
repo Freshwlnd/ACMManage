@@ -1,5 +1,4 @@
 <?php
-
 $servername = "127.0.0.1";
 $username0 = "root";
 $password0 = "root";
@@ -24,11 +23,18 @@ if (isset($_COOKIE["user"])){
 
 if ($IsAdmin) {
 
-    $OnCNo = $_POST['OnCNo'];
+    $DDTNo = $_POST['DDTNo'];
+    $PNo1 = $_POST['PNo1'];
+    $PNo2 = $_POST['PNo2'];
+    $PNo3 = $_POST['PNo3'];
+    $PNo4 = $_POST['PNo4'];
+    $PNo5 = $_POST['PNo5'];
 
-    $sql1 = "DELETE FROM OnlineContest WHERE OnCNo='$OnCNo'";
+    $sql2 = "INSERT INTO
+        DailyDutyTeam(DDTNo, PNo1, PNo2, PNo3, PNo4, PNo5)
+         Value ('$DDTNo', '$PNo1', '$PNo2', '$PNo3', '$PNo4', '$PNo5')";
 
-    $result = $conn->query($sql1);
+    $result = $conn->query($sql2);
 
     if ($result == TRUE) {
         echo TRUE;
