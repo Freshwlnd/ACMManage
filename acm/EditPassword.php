@@ -12,8 +12,8 @@ if ($conn->connect_error) {
     die("连接失败: " . $conn->connect_error);
 }
 
-$OldPassword = $_POST['OldPassword'];
-$NewPassword = $_POST['NewPassword'];
+$OldPassword = md5($_POST['OldPassword']);
+$NewPassword = md5($_POST['NewPassword']);
 
 if (isset($_COOKIE["user"])) {
     $PNo = $_COOKIE["user"];

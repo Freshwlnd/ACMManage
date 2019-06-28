@@ -9,9 +9,9 @@
     <script type="text/javascript" src="../jquery.min.js"></script>
     <script type="text/javascript" src="../jquery.easyui.min.js"></script>
 </head>
-    <body style="background-color: #193956">
-        <div id="p1" style="padding:10px;background:#ccd3d9;color:#000;border-radius:24px"><p></p></div>
-        <div id="p" style="padding:10px;background:#99a7b4;color:#000;border-radius:24px;font:'Droid Sans'" align="center"><p>
+    <body style="background:url(background.jpg);background-size:100% 100%;background-repeat:no-repeat;background-attachment:fixed">
+        <div id="p1" style="padding:10px;background:#ccd3d9;color:#000;border-radius:24px;opacity:0.5"><p></p></div>
+        <div id="p" style="padding:10px;background:#b2bdc6;color:#000;border-radius:24px;opacity:0.9"><p>
             <center><h1>ACM集训队队员注册</h1></center>
             <div align="center" style="margin: 10px 0px"><input id="PName"></div>
             <div align="center" style="margin: 10px 0px"><input id="PSex"></div>
@@ -37,13 +37,13 @@
                 height:500,
                 cls:'pos',
                 //region:'center'
-            })
+            });
             $('#p1').panel({
                 width:1000,
                 height:700,
                 cls:'pos',
                 //region:'center'
-            })
+            });
             $('#PName').textbox({
                 required:true,
                 label:'*姓名',
@@ -68,7 +68,7 @@
                     {"sex":"男","sex":"男"},
                     {"sex":"女","sex":"女"},
                 ]
-            })
+            });
             $('#PNo').textbox({
                 required:true,
                 label:'*学号',
@@ -173,8 +173,8 @@
             });
             $('#commit').linkbutton({
                 width:150
-            })
-            function insert(PName,PSex,PNo,PClass,PPhone,PBankNo,PQQ,PWechat,PT_Size){
+            });
+            function insert(PName,PSex,PNo,PPassword,PClass,PPhone,PBankNo,PQQ,PWechat,PT_Size){
                 var result;
                 $.ajax({
                     type:'post',
@@ -184,6 +184,7 @@
                         'PName':PName,
                         'PSex':PSex,
                         'PNo':PNo,
+                        'PPassword':PPassword,
                         'PClass':PClass,
                         'PPhone':PPhone,
                         'PBankNo':PBankNo,
@@ -201,10 +202,10 @@
                 else{
                     return false;
                 }
-            }
+            };
             $('#commit').click(function(){
-                if($('#PName').textbox('isValid')&&$('#PNo').textbox('isValid')&&$('#PPhone').textbox('isValid')&&$('#PBankNo').textbox('isValid')&&$('#PQQ').textbox('isValid')&&$('#PWechat').textbox('isValid')&&$('#PT_Size').textbox('isValid')){
-                    if(insert($('#PName').textbox('getText'),$('#PNo').textbox('getText'),$('#PClass').textbox('getText'),$('#PPhone').textbox('getText'),$('#PBankNo').textbox('getText'),$('#PQQ').textbox('getText'),$('#PWechat').textbox('getText'),$('#PT_Size').textbox('getText'))){
+                if($('#PName').textbox('isValid')&&$('#PSex').textbox('isValid')&&$('#PPassword').textbox('isValid')&&$('#PNo').textbox('isValid')&&$('#PPhone').textbox('isValid')&&$('#PBankNo').textbox('isValid')&&$('#PQQ').textbox('isValid')&&$('#PWechat').textbox('isValid')&&$('#PT_Size').textbox('isValid')){
+                    if(insert($('#PName').textbox('getText'),$('#PSex').textbox('getText'),$('#PNo').textbox('getText'),$('#PPassword').textbox('getText'),$('#PClass').textbox('getText'),$('#PPhone').textbox('getText'),$('#PBankNo').textbox('getText'),$('#PQQ').textbox('getText'),$('#PWechat').textbox('getText'),$('#PT_Size').textbox('getText'))){
                         alert("注册成功");
                     }
                     else{

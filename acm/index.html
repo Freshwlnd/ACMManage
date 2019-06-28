@@ -14,6 +14,7 @@
 	<center><h1>ACM内部信息管理系统</h1></center>
 		<div align="right"><u>
 			<em id="p1" style="color: #fff">游客</em>
+			<a id="ChangePass" style="margin:0px 10px">修改密码</a>
 			<a id="logout" style="margin:0px 10px">Log Out</a>
 		</u></div>
 		<div id="tt" style= "opacity:0.9">
@@ -47,8 +48,18 @@
 					$('#logout').linkbutton({text:'Log In'});
 				}else{
 					$('#logout').click(logout);
+					$('#ChangePass').linkbutton('enable');
 				}
 			}
+			$('#ChangePass').linkbutton({
+				width:70,
+				disabled:true,
+				size:'small',
+				group:"bg"
+			})
+			$('#ChangePass').click(function(){
+				window.location.href='./ChangePassword.html';
+			})
 			$('#logout').linkbutton({
 				width:70,
 				size:'small',
