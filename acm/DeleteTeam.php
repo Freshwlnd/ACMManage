@@ -2,7 +2,7 @@
 
 $servername = "127.0.0.1";
 $username0 = "root";
-$password0 = "root";
+$password0 = "";
 $dbname = "ACMInfo";
 
 // 创建连接
@@ -12,24 +12,20 @@ if ($conn->connect_error) {
     die("连接失败: " . $conn->connect_error);
 }
 
-$OffCNo = 100000000;
+$TNo = 100000000;
 
-$sql1 = "SELECT * FROM OfflineContest";
-
-$result = $conn->query($sql1);
-
-$OffCNo = $OffCNo + $result->num_rows - 1;
-$OffCNo = "OffC".substr($OffCNo,1);
-
-$sql1 = "DELETE FROM OfflineContest WHERE OffCNo='$OffCNo'";
+$sql1 = "SELECT * FROM Team";
 
 $result = $conn->query($sql1);
 
-if($result==TRUE) {
-    echo TRUE;
-} else {
-    echo("错误描述: " . mysqli_error($conn));
-}
+$TNo = $TNo + $result->num_rows - 1;
+$TNo = "T".substr($TNo,1);
+
+$sql1 = "DELETE FROM Team WHERE TNo='$TNo'";
+
+$result = $conn->query($sql1);
+
+echo $result;
 
 $conn->close();
 
