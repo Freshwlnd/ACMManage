@@ -12,12 +12,12 @@ if ($conn->connect_error) {
 }
 
 $OnCNo = 100000000;
-//$OJName = "HDU";
-//$OnCName = "多效训练赛1";
-//$Time = '2019-6-28';
-$OJName = $_POST['OJName'];
-$OnCName = $_POST['OnCName'];
-$Time = $_POST['Time'];
+$OJName = "HDU";
+$OnCName = "多效训练赛1";
+$Time = '2019-6-28';
+//$OJName = $_POST['OJName'];
+//$OnCName = $_POST['OnCName'];
+//$Time = $_POST['Time'];
 
 $sql1 = "SELECT * FROM OnlineContest";
 
