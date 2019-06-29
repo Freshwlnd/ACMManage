@@ -23,7 +23,7 @@ if ($result->num_rows > 0) {
     setcookie("user", $account, time()+3600);
     echo true;
 } else {
-    echo false;
+    echo "密码错误！";
 }
 $conn->close();
 

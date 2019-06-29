@@ -22,7 +22,8 @@ if (isset($_COOKIE["user"])){
 
 } else {
 
-    echo json_encode("{'PName': '游客'}");
+	$a['PName']='游客';
+    echo json_encode(a);
 
 }
 
