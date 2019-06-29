@@ -11,7 +11,7 @@
  Target Server Version : 50643
  File Encoding         : 65001
 
- Date: 29/06/2019 19:33:00
+ Date: 29/06/2019 20:53:07
 */
 
 SET NAMES utf8mb4;
@@ -56,8 +56,8 @@ CREATE TABLE `announcement` (
 BEGIN;
 INSERT INTO `announcement` VALUES ('训练赛1', '训练赛时间为2019-7-13，在信息楼实验室202进行，请各位同学及时到达。', '2019-06-29 04:04:34');
 INSERT INTO `announcement` VALUES ('训练赛1结果', '罗金荣同学获得了本次训练赛的冠军，让大家一起恭喜他！', '2019-06-29 04:07:02');
-INSERT INTO `announcement` VALUES ('EC-Final名单', '徐悦皓、罗金荣、龚炯达；以及其他同学入选最终名单，如有异议，请在三天内找猛士老师协商，当然，协商也不会改变结果。', '2019-06-29 04:08:12');
-INSERT INTO `announcement` VALUES ('值日表', '第一周：罗金荣 徐悦皓 龚炯达 沈彤   王振杰值日\n第二周：徐鑫   王龙   胡柯青 张羽丰 缪佩翰值日。', '2019-06-29 19:09:14');
+INSERT INTO `announcement` VALUES ('EC-Final名单', '徐悦皓、罗金荣、龚炯达；以及其他同学入选最终名单，如有异议，请在三天内找猛士老师协商。', '2019-06-29 04:08:12');
+INSERT INTO `announcement` VALUES ('值日表', '第一组：罗金荣   徐悦皓   龚炯达     沈彤    王振杰                       \n         第二组：徐鑫        王龙     胡柯青   张羽丰   缪佩翰', '2019-06-29 19:09:14');
 INSERT INTO `announcement` VALUES ('公告注意事项⚠️！', '      公告中无法显示换行符！所以大家觉得很奇怪的时候把空格都当成换行符，用意念转换一下即可。', '2019-06-29 19:13:08');
 COMMIT;
 
@@ -189,7 +189,7 @@ INSERT INTO `person` VALUES ('1712190114', '徐悦皓', '男', '计科1701', '',
 INSERT INTO `person` VALUES ('1712190115', '张羽丰', '男', '计科1701', '', NULL, '17376562358', '1691903105', '4424241245', 'L', NULL, '蓝音', NULL, NULL, 0, 'e10adc3949ba59abbe56e057f20f883e', '3');
 INSERT INTO `person` VALUES ('1712190120', '罗金荣', '男', '计科1701', '', NULL, '17376565665', '', '4745442', 'M', NULL, '我叫罗金荣', NULL, NULL, 1, '21232f297a57a5a743894a0e4a801fc3', '4');
 INSERT INTO `person` VALUES ('1712190400', '缪佩翰', '男', '计科1701', '1234567891234567890', NULL, '17371737173', '1884411', '12456498', 'XL', NULL, '', NULL, NULL, 0, 'f2d136ea22a5b6e0ed0120a03ab795c2', NULL);
-INSERT INTO `person` VALUES ('1735020325', '陈锦豪', '男', '计科1701', '3333333333333333333', NULL, '17376569429', '1007826223', 'a1007826223', 'M', NULL, '', NULL, NULL, 0, 'ecb1d4ce2c43c60fbdf74a70648cf020', NULL);
+INSERT INTO `person` VALUES ('1735020325', '陈锦豪', '男', '计科1701', '3333333333333333333', 0, '17376569429', '1007826223', 'a1007826223', 'M', 0, '', 0, '', 0, 'ecb1d4ce2c43c60fbdf74a70648cf020', '5');
 COMMIT;
 
 -- ----------------------------
@@ -216,7 +216,7 @@ COMMIT;
 -- View structure for admindata
 -- ----------------------------
 DROP VIEW IF EXISTS `admindata`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `admindata` AS select `person`.`PName` AS `PName`,`person`.`PNo` AS `PNo`,`person`.`PSex` AS `PSex`,`person`.`PClass` AS `PClass`,`person`.`PBankNo` AS `PBankNo`,`person`.`PPhone` AS `PPhone`,`person`.`PQQ` AS `PQQ`,`person`.`PWechat` AS `PWechat`,`person`.`PT_Size` AS `PT_Size`,`person`.`PHdu` AS `PHdu`,`person`.`PAdmin` AS `PAdmin`,`person`.`PSeatNo` AS `PSeatNo` from `person`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `admindata` AS select `person`.`PName` AS `PName`,`person`.`PNo` AS `PNo`,`person`.`PSex` AS `PSex`,`person`.`PClass` AS `PClass`,`person`.`PBankNo` AS `PBankNo`,`person`.`PPhone` AS `PPhone`,`person`.`PQQ` AS `PQQ`,`person`.`PWechat` AS `PWechat`,`person`.`PT_Size` AS `PT_Size`,`person`.`PHdu` AS `PHdu`,`person`.`PAdmin` AS `PAdmin`,`person`.`PSeatNo` AS `PSeatNo`,`person`.`PHeight` AS `PHeight`,`person`.`PWeight` AS `PWeight`,`person`.`PSignNo` AS `PSignNo`,`person`.`PSingle` AS `PSingle` from `person`;
 
 -- ----------------------------
 -- View structure for announce
