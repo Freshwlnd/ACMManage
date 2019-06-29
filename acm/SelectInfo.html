@@ -61,7 +61,12 @@
             var title;
             var PNo = $('#PNo').val();
             if (!PNo) {
-                alert('查询出错');
+                $.messager.show({
+                    cls:'c2',
+                    msg:"查询出错",
+                    timeout:3000,
+                    showType:'fade',
+                })
             }
             else {
                 $.ajax({
@@ -75,11 +80,13 @@
                         result = data;
                     }
                 });
-                //result = '{ "PNo": "1712190113", "PName": "\u9f9a\u70af\u8fbe", "PSex": null, "PClass": "\u8ba1\u79d11701", "PPhone": "1737656xxxx", "PQQ": "89237498i", "PWechat": "", "PT_Size": "M", "PHdu": null, "PSeatNo": 5}';
-                //result = null;
-                //alert(result);
                 if (result === 'null') {
-                    alert("查无此人");
+                    $.messager.show({
+                        cls:'c2',
+                        msg:"查无此人",
+                        timeout:3000,
+                        showType:'fade',
+                    })
                 }
                 else {
                     result = JSON.parse(result);

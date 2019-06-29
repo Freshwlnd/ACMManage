@@ -64,7 +64,12 @@
 					$('#admin').linkbutton('enable');
 				}
 				else{
-					alert("无管理员权限");
+					$.messager.show({
+                        cls:'c2',
+                        msg:"无管理员权限",
+                        timeout:3000,
+                        showType:'fade',
+                    })
 					window.location.href="./index.html";
 				}
 			}
@@ -87,10 +92,20 @@
 					url: './LogOut.php',
 					success: function (data) {
 						if(data==true) {
-							alert('登出成功！');
+							$.messager.show({
+		                        cls:'c2',
+		                        msg:'登出成功！',
+		                        timeout:3000,
+		                        showType:'fade',
+		                    })
 							location.reload();
 						} else {
-							alert(data);
+							$.messager.show({
+		                        cls:'c2',
+		                        msg:data,
+		                        timeout:3000,
+		                        showType:'fade',
+		                    })
 						}
 					}
 				});
