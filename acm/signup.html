@@ -190,8 +190,8 @@
                     message:'只允许输入数字'
                 }
             });
+            var result;
             function insert(PName,PSex,PNo,PPassword,PClass,PPhone,PBankNo,PQQ,PWechat,PT_Size){
-                var result;
                 $.ajax({
                     type:'post',
                     async:false,
@@ -233,7 +233,7 @@
                     else{
                         $.messager.show({
                             cls:'c2',
-                            msg:"该用户已存在",
+                            msg:result,
                             timeout:3000,
                             showType:'fade',
                         })
