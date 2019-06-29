@@ -15,7 +15,7 @@ if ($conn->connect_error) {
 if (isset($_COOKIE["user"])){
     $PNo = $_COOKIE["user"];
 
-    $sql1 = "SELECT PNo, PName, PSex, PClass, PBankNo, PHeight, PPhone, PQQ, PWechat, PT_Size, PSignNo, PHdu, PWeight, PSingle FROM person WHERE PNo='$PNo'";
+    $sql1 = "SELECT PNo, PName, PSex, PClass, PBankNo, PHeight, PPhone, PQQ, PWechat, PT_Size, PSeatNo, PHdu, PWeight, PSingle FROM person WHERE PNo='$PNo'";
     $result = $conn->query($sql1);
 
     echo json_encode(mysqli_fetch_assoc($result));

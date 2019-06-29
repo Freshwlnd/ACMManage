@@ -1,0 +1,115 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <link rel="stylesheet" type="text/css" href="../themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="../demo/demo.css">
+    <script type="text/javascript" src="../jquery.min.js"></script>
+    <script type="text/javascript" src="../jquery.easyui.min.js"></script>
+</head>
+<body>
+    <center>
+        <br /><br /><br /><br />
+        <div id="panel" class="easyui-panel" style="background-color:azure;">
+            
+        </div>
+        <!--生成按钮-->
+        <center><div id='buttonSelect' class='easyui-linkbutton' style='margin:50px 50px' onclick="select()" value="10000">查询</div></center>
+        <center><div id='buttonBack' class='easyui-linkbutton' style='margin:50px 50px' onclick="mypanel()" value="10000">返回</div></center>
+    </center>
+    <script>
+        //设置面板大小
+        $('#panel').panel({
+            width: 750,
+            height: 380,
+        })
+        $('#buttonSelect').linkbutton({
+            width: 50,
+            height: 30,
+        });
+        $('#buttonBack').linkbutton({
+            width: 50,
+            height: 30,
+        });
+        function disp(num) {
+            var re = "";
+            for (var x = 0; x < num; ++x) {
+                re += "&nbsp";
+            }
+            return re;
+        }
+        function mypanel() {
+            var title = $("<br /><br /><br /><center><div><h1>请输入需要查询的学号</h1></div></center>" +
+                "<center><input id='PNo' class='easyui-textbox' /></center> " +
+                "");
+            
+            $('#PNo').textbox({
+                width: 400,
+                height: 40,
+            });
+            $('#panel').panel('clear');
+            $('#panel').append(title);
+            $('#panel').show();
+            document.getElementById('buttonSelect').style.display = '';
+            document.getElementById('buttonBack').style.display = 'none';
+        }
+        //按下查询键
+        function select() {
+            var result;
+            var title;
+            var PNo = $('#PNo').val();
+            if (!PNo) {
+                alert('查询出错');
+            }
+            else {
+                $.ajax({
+                    type: "post",
+                    async: false,
+                    url: './GetOneData.php',
+                    data: {
+                        'PNo': PNo,
+                    },
+                    success: function (data) {
+                        result = data;
+                    }
+                });
+                //result = '{ "PNo": "1712190113", "PName": "\u9f9a\u70af\u8fbe", "PSex": null, "PClass": "\u8ba1\u79d11701", "PPhone": "1737656xxxx", "PQQ": "89237498i", "PWechat": "", "PT_Size": "M", "PHdu": null, "PSeatNo": 5}';
+                //result = null;
+                //alert(result);
+                if (result === 'null') {
+                    alert("查无此人");
+                }
+                else {
+                    result = JSON.parse(result);
+                    for (var i in result) {
+                        if (result[i] === null) {
+                            result[i] = "";
+                        }
+                    }
+                    //重构面板
+                    title = $("<div style='margin: 15px 200px'>" + "学号: " + disp(4) + result.PNo + "</div>" +
+                        "<div style='margin: 15px 200px'>" + "姓名: " + disp(4) + result.PName + "</div>" +
+                        "<div style='margin: 15px 200px'>" + "性别: " + disp(4) + result.PSex + "</div>" +
+                        "<div style='margin: 15px 200px'>" + "班级: " + disp(4) + result.PClass + "</div>" +
+                        "<div style='margin: 15px 172px'>" + "电话号码: " + disp(4) + result.PPhone + "</div>" +
+                        "<div style='margin: 15px 191px'>" + "QQ号: " + disp(4) + result.PQQ + "</div>" +
+                        "<div style='margin: 15px 186px'>" + "微信号: " + disp(4) + result.PWechat + "</div>" +
+                        "<div style='margin: 15px 172px'>" + "T-恤尺码: " + disp(4) + result.PT_Size + "</div>" +
+                        "<div style='margin: 15px 172px'>" + "杭电账号: " + disp(4) + result.PHdu + "</div>" +
+                        "<div style='margin: 15px 200px'>" + "座位: " + disp(4) + result.PSeatNo + "</div>" +
+                        "");
+                    $('#panel').panel('clear');
+                    $('#panel').append(title);
+                    $('#panel').show();
+                    document.getElementById('buttonSelect').style.display = 'none';
+                    document.getElementById('buttonBack').style.display = '';
+                }
+                
+            }
+        };
+        window.onload = mypanel();
+    </script>
+</body>
+</html>

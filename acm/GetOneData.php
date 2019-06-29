@@ -19,20 +19,20 @@ if (isset($_COOKIE["user"])){
     $sql1 = "SELECT PAdmin FROM person WHERE PNo='$PNo0'";
     $result = $conn->query($sql1);
     $row = mysqli_fetch_assoc($result);
-    $IsAdmin = row['PAdmin'];
+    $IsAdmin = $row['PAdmin'];
 }
 
-$PNo1 = $_POST('PNo');
+$PNo1 = $_POST['PNo'];
 
 if ($IsAdmin) {
 
-    $sql2 = "SELECT PNo, PName, PSex, PClass, PBankNo, PHeight, PPhone, PQQ, PWechat, PT_Size, PSignNo, PHdu, PWeight, PSingle FROM person WHERE PNo='$PNo1'";
+    $sql2 = "SELECT PNo, PName, PSex, PClass, PBankNo, PHeight, PPhone, PQQ, PWechat, PT_Size, PSeatNo, PHdu, PWeight, PSingle FROM person WHERE PNo='$PNo1'";
     $result = $conn->query($sql2);
     echo json_encode(mysqli_fetch_assoc($result));
 
 } else {
 
-    $sql2 = "SELECT PNo, PName, PSex, PClass, PBankNo, PHeight, PPhone, PQQ, PWechat, PT_Size, PSignNo, PHdu, PWeight, PSingle FROM person WHERE PNo='$PNo1'";
+    $sql2 = "SELECT PNo, PName, PSex, PClass, PBankNo, PHeight, PPhone, PQQ, PWechat, PT_Size, PSeatNo, PHdu, PWeight, PSingle FROM person WHERE PNo='$PNo1'";
     $result = $conn->query($sql2);
     echo json_encode(mysqli_fetch_assoc($result));
 
