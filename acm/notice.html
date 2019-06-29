@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>首页</title>
+	<title>事务公告</title>
 	<link rel="stylesheet" type="text/css" href="../themes/default/easyui.css">
 	<link rel="stylesheet" type="text/css" href="../themes/icon.css">
 	<link rel="stylesheet" type="text/css" href="../demo/demo.css">
@@ -11,45 +11,191 @@
 </head>
 <body>
 <div id="cc" style="width:70%;height:350px;">
-        <!--div data-options="region:'north'" style="height:50px"></div>
-        <div data-options="region:'south'" style="height:50px;"></div-->
-        <div data-options="region:'west'" style="width:200px;" title="信息编号">
-        	<input id='cb' align="center">
-        </div>
-        <div data-options="region:'center'" style="padding:20px" title="公告内容">
-            <p>面板内容</p>
-            <p>面板内容</p>
-            <p>面板内容</p>
-        </div>
+    <div data-options="region:'north'" style="height:35px">
+    	<a id="add"></a>
+    	<a id="remove"></a>
+    	<a id="edit"></a>
     </div>
+    <!--div data-options="region:'south'" style="height:50px;"></div-->
+    <div data-options="region:'west'" style="width:200px;" title="公告标题">
+    	<div align="center" style="margin: 50px 0px"><input id='cb'></div>
+    </div>
+    <div data-options="region:'center'" style="padding:20px" title="公告内容">
+        <h1><p id="title"></p></h1>
+        <p id="content"></p>
+        <u><p id="time" align="right"></p></u>
+    </div>
+</div>
+<div id="win">
+	<div align="center" style="margin: 10px"><input id="w_title"></div>
+	<div align="center" style="margin: 10px"><input id="w_content" data-options="multiline:true"></div>
+	<div align="center" style="margin: 10px"><a id="commit">发布</a></div>
+</div>
     <script type="text/javascript">
         $('#cc').layout({
         	fit:true,
         });
+        $('#win').window({
+        	title:"发布公告",
+        	width:600,
+        	height:400,
+        	model:true,
+        	closed:true,
+        })
+        $('#w_title').textbox({
+			label:'标题',
+			labelPosition:'left',
+			labelAlign:'left',
+			width:500,
+		});
+		$('#w_content').textbox({
+			label:'内容',
+			labelPosition:'left',
+			labelAlign:'left',
+			width:500,
+			height:250,
+		});
+		
+        $("#add").linkbutton({
+        	iconCls:'icon-add',
+        	onClick:function(){
+        		$('#win').window({
+        			closed:false,
+        		})
+        		$('#commit').linkbutton({
+					onClick:function(){
+						var result;
+						$.ajax({
+							type:'post',
+							async:false,
+							url:'./InsertAnnounce.php',
+							data:{
+								Title:$('#w_title').textbox('getText'),
+								Content:$('#w_content').textbox('getText'),
+							},
+							success:function (data) {
+								result=data;
+							}
+						});
+						if(result==true){
+							alert("发布成功");
+							$('#cb').combobox('reload','./GetAnnounce.php');
+							$('#win').window({
+			        			closed:true,
+			        		})
+						}else{
+							alert(result);
+						}
+					}
+				})
+        	}
+        })
+        $("#remove").linkbutton({
+        	iconCls:'icon-remove',
+        	onClick:function(){
+        		var result;
+				$.ajax({
+					type:'post',
+					async:false,
+					url:'./DeleteAnnounce.php',
+					data:{
+						Time:$('#cb').combobox('getValue'),
+					},
+					success:function (data) {
+						result=data;
+					}
+				});
+				if(result==true){
+					alert('删除成功');
+					$('#cb').combobox('reload','./GetAnnounce.php');
+				}else{
+					alert(result);
+				}
+        	}
+        })
+        $("#edit").linkbutton({//编辑公告
+        	iconCls:'icon-edit',
+        	onClick:function(){
+        		$('#win').window({//打开编辑窗口
+        			closed:false,
+        		})
+        		$.ajax({//获取所编辑的公告
+					type:'post',
+					async:false,
+					url:'./GetOneAnnounce.php',
+					data:{
+						Time:$('#cb').combobox('getValue'),
+					},
+					success:function(data){
+						data=JSON.parse(data);
+						$('#w_title').textbox('setText',data["Title"]);
+						$('#w_content').textbox('setText',data["Content"]);
+					},
+					fail:function(data){
+						alert(data);
+					}
+				});
+				$('#commit').linkbutton({//提交
+					onClick:function(){
+						var result;
+						$.ajax({
+							type:'post',
+							async:false,
+							url:'./EditAnnounce.php',
+							data:{
+								Time:$('#cb').combobox('getValue'),
+								Title:$('#w_title').textbox('getText'),
+								Content:$('#w_content').textbox('getText'),
+							},
+							success:function (data) {
+								result=data;
+							}
+						});
+						if(result==true){
+							alert("修改成功");
+							$('#cb').combobox('reload','./GetAnnounce.php');
+							$('#win').window({
+			        			closed:true,
+			        		})
+						}else{
+							alert(result);
+						}
+					}
+				})
+        	}
+        })
         $('#cb').combobox({
         	valueField:"Time",
         	textField:"Title",
-//        	url:"./GetAnnounce.php",
-        	data:[{"Title":"\u8bad\u7ec3\u8d5b1","Content":"\u8bad\u7ec3\u8d5b\u65f6\u95f4\u4e3a2019-7-13\uff0c\u5728\u4fe1\u606f\u697c\u5b9e\u9a8c\u5ba4202\u8fdb\u884c\uff0c\u8bf7\u5404\u4f4d\u540c\u5b66\u53ca\u65f6\u5230\u8fbe\u3002","Time":"2019-06-29 04:04:34"},{"Title":"\u8bad\u7ec3\u8d5b1\u7ed3\u679c","Content":"\u7f57\u91d1\u8363\u540c\u5b66\u83b7\u5f97\u4e86\u672c\u6b21\u8bad\u7ec3\u8d5b\u7684\u51a0\u519b\uff0c\u8ba9\u5927\u5bb6\u4e00\u8d77\u606d\u559c\u4ed6\uff01","Time":"2019-06-29 04:07:02"},{"Title":"EC-Final\u540d\u5355","Content":"\u5f90\u60a6\u7693\u3001\u7f57\u91d1\u8363\u3001\u9f9a\u70af\u8fbe\uff1b\u4ee5\u53ca\u5176\u4ed6\u540c\u5b66\u5165\u9009\u6700\u7ec8\u540d\u5355\uff0c\u5982\u6709\u5f02\u8bae\uff0c\u8bf7\u5728\u4e09\u5929\u5185\u627e\u731b\u58eb\u8001\u5e08\u534f\u5546\uff0c\u5f53\u7136\uff0c\u534f\u5546\u4e5f\u4e0d\u4f1a\u6539\u53d8\u7ed3\u679c\u3002","Time":"2019-06-29 04:08:12"}]
-
+        	editable:false,
+        	panelHeight:'auto',
+        	url:"./GetAnnounce.php",
+        	onChange:function(newValue){
+				$.ajax({
+					type:'post',
+					async:false,
+					url:'./GetOneAnnounce.php',
+					data:{
+						Time:newValue
+					},
+					success:function(data){
+						//alert(data);
+						data=JSON.parse(data);
+						document.getElementById("title").innerHTML=data["Title"];
+						document.getElementById("content").innerHTML=data["Content"];
+						document.getElementById("time").innerHTML=data["Time"];
+					},
+					fail:function(data){
+						alert(data);
+					}
+				});
+        	},
+        	onLoadSuccess: function (data) {
+                var data = $("#cb").combobox("getData");
+                if (data && data.length > 0) {
+                    $("#cb").combobox("setValue", data[0].Time);
+                }
+            },
         })
-        setHeight();
-        //该函数动态调整布局高度
-        function setHeight(){
-			//获取布局对象
-            var c = $('#cc');
-			//获取布局中部区域的面板对象
-            var p = c.layout('panel','center');
-			//获取面板高度
-            var oldHeight = p.outerHeight();
-			//重新设置面板的高度自动适应其内容
-            p.panel('resize', {height:'auto'});
-			//获取面板新的高度
-            var newHeight = p.outerHeight();
-			//重新设置布局的高度
-            c.layout('resize',{
-                height: (c.height() + newHeight - oldHeight)
-            });
-        }
     </script>
 </body>

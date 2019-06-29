@@ -13,31 +13,25 @@
 </head>
 <body style="background-color:azure">
 
+    <div id="panelC" class="easyui-panel" style="background-color:azure;">
+    </div>
+    <div id="panelC1" class="easyui-panel" style="background-color:antiquewhite;">
+    </div>
+    <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+    <br /><br /><br /><br />
+    <div style="margin:15px 400px"><a id="buttonChange" class="easyui-linkbutton">修改信息</a></div>
 
 
-<div id="panelC" class="easyui-panel" style="background-color:azure;">
-
-</div>
-<div id="panelC1" class="easyui-panel" style="background-color:antiquewhite;">
-
-</div>
-<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-<br /><br /><br /><br />
-<div style="margin:15px 400px"><a id="buttonChange" class="easyui-linkbutton">修改信息</a></div>
-
-
-
-
-<script>
+    <script>
     //初始化样式
     $('#panelP').panel({
         width: 1510,
         height: 738,
     });
     $('#panelC').panel({
-        width: 350,
+        width: 450,
         height: 450,
-        left: 300,
+        left: 200,
         top:180,
         style: {
             'position':'absolute'
@@ -74,6 +68,7 @@
                 result = data;
             }
         });
+        //result = '{ "PNo": "1712190113", "PName": "\u9f9a\u70af\u8fbe", "PSex": null, "PClass": "\u8ba1\u79d11701", "PBankNo": "", "PHeight": null, "PPhone": "173****5843", "PQQ": "1848663638", "PWechat": "01234567890123456789", "PT_Size": "M", "PSignNo": null, "PHdu": "", "PWeight": null, "PSeatNo": null }';
         result = JSON.parse(result);
         for(let i in result){
             if(result[i]===null){
@@ -96,7 +91,6 @@
         $('#panelC').show();
     }
     //获取奖牌信息
-
     $(function () {
         var result;
         var title;
@@ -108,10 +102,12 @@
                 result = data;
             }
         });
+        //result = '{"error":"\u9f9a\u70af\u8fbe"}';
         result = JSON.parse(result);
         if(result['error']!=null) {
-            title = result['error'];
-        } else {
+            title = "<center>" + result['error'] + "</center>";
+        }
+        else {
             title = "";
             for (var i in result) {
                 title = title + ("<center><div>" + disp(4) + result[i]['比赛时间'] + "参加了在"
@@ -126,7 +122,41 @@
         $('#panelC1').panel('clear');
         $('#panelC1').append(title);
         $('#panelC1').show();
-    });
+        });
+    //自定义验证规则
+        $.extend($.fn.textbox.defaults.rules, {
+            PBankNo: {
+                validator: function (value, param) {
+                    return (/^\d{19}$/.test(value));
+                },
+                message: '请输入规范的19位银行卡号',
+            },
+            /*PClass: {
+                validator: function (value, param) {
+                    return (/.{1,}\d{4}/.test(value));
+                },
+                message:'请输入规范的班级',
+            },*/
+            PPhone: {
+                validator: function (value, param) {
+                    return (/^\d{11}$/.test(value));
+                },
+                message: '请输入规范的电话号码',
+            },
+            PQQ: {
+                validator: function (value, param) {
+                    return (/^\d{5,11}$/.test(value));
+                },
+                message: '请输入规范的QQ号',
+            },
+            PT_Size: {
+                validator: function (value, param) {
+                    return /^[MSL]{1}$|^[X]{1,10}[L]{1}$/.test(value);
+                },
+                message: '请输入规范的尺码',
+            },
+
+        });
     //修改文本框样式
     function changeCSS(mInfo) {
         var css = {
@@ -135,6 +165,7 @@
             labelposition: 'left',
             labelAlign: 'right',
             prompt: mInfo.PClass,
+            //validType: 'PClass["#PClass"]',
         }
         $('#PClass').textbox(css);
         css = {
@@ -143,6 +174,7 @@
             labelposition: 'left',
             labelAlign: 'right',
             prompt: mInfo.PBankNo,
+            validType: 'PBankNo["#PBankNo"]',
         }
         $('#PBankNo').textbox(css);
         css = {
@@ -151,6 +183,7 @@
             labelposition: 'left',
             labelAlign: 'right',
             prompt: mInfo.PPhone,
+            validType: 'PPhone["#PPhone"]',
         }
         $('#PPhone').textbox(css);
         css = {
@@ -159,6 +192,7 @@
             labelposition: 'left',
             labelAlign: 'right',
             prompt: mInfo.PQQ,
+            validType: 'PQQ["#PQQ"]',
         }
         $('#PQQ').textbox(css);
         css = {
@@ -167,6 +201,7 @@
             labelposition: 'left',
             labelAlign: 'right',
             prompt: mInfo.PWechat,
+
         }
         $('#PWechat').textbox(css);
         css = {
@@ -175,6 +210,7 @@
             labelposition: 'left',
             labelAlign: 'right',
             prompt: mInfo.PT_Size,
+            validType: 'PT_Size["#PT_Size"]',
         }
         $('#PT_Size').textbox(css);
         css = {
@@ -191,7 +227,6 @@
         $('#buttonConfire').linkbutton(css);
         $('#panelC').show();
     }
-
     //修改信息
     $('#buttonChange').click(function () {
         var result;
@@ -204,7 +239,8 @@
             }
         });
         $('#panelC').panel('clear');
-        result = JSON.parse(result);
+        //result = '{ "PNo": "1712190113", "PName": "\u9f9a\u70af\u8fbe", "PSex": null, "PClass": "\u8ba1\u79d11701", "PBankNo": "", "PHeight": null, "PPhone": "173****5843", "PQQ": "1848663638", "PWechat": "0", "PT_Size": "M", "PSignNo": null, "PHdu": "", "PWeight": null, "PSeatNo": null }';
+        result = JSON.parse(result); 
         var title = ("<div style='margin: 17px 45px;'><input id='PClass' class='easyui-textbox' \/></div>" +
             "<div style='margin: 20px 45px;'><input id='PBankNo' class='easyui-textbox' \/></div>" +
             "<div style='margin: 20px 45px;'><input id='PPhone' class='easyui-textbox' \/></div>" +
@@ -216,11 +252,24 @@
 
         $('#panelC').append(title);
         $('#panelC').show();
-        changeCSS(result);
+        changeCSS(result);//修改文本框样式
         $('#buttonConfire').click(
             //按下确认修改
             function ChangeInfo() {
-                //修改完成返回数据,未填写返回原数据
+                //验证输入信息
+                if (!$('#PBankNo').textbox('isValid')) {
+                    return;
+                }
+                if (!$('#PT_Size').textbox('isValid')) {
+                    return;
+                }
+                if (!$('#PPhone').textbox('isValid')) {
+                    return;
+                }
+                if (!$('#PQQ').textbox('isValid')) {
+                    return;
+                }
+                 //修改完成返回数据,未填写返回原数据
                 var PName = result.PName;
                 var PNo = result.PNo;
                 var PClass = $('#PClass').textbox('getValue');
@@ -270,10 +319,10 @@
                         result = data;
                     }
                 });
-                if (result != true) {
-                    alert(result);
-                } else {
+                if (result == true) {
                     alert("修改成功！");
+                } else {
+                    alert(result);
                 }
                 //刷新信息
                 $('#panelC').panel('clear');
@@ -281,7 +330,6 @@
             });
 
     })
-    window.onload = getInfo();
-</script>
+    window.onload = getInfo();</script>
 </body>
 </html>

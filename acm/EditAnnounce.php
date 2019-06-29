@@ -28,7 +28,7 @@ if ($IsAdmin) {
     $Content = $_POST['Content'];
     $Time = $_POST['Time'];
 
-    $sql2 = "UPDATE Announcement SET Title='$Title', Content='$Content' WHERE Time='$Time')";
+    $sql2 = "UPDATE Announcement SET Title='$Title', Content='$Content' WHERE Time='$Time'";
 
     $result = $conn->query($sql2);
 

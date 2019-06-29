@@ -20,7 +20,7 @@ $result = $conn->query($sql1);
 
 if($result) {
 
-    echo json_encode($result->fetch_all(MYSQLI_ASSOC));
+    echo json_encode($result->fetch_assoc());
 
 } else {
 

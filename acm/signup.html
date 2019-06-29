@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -16,7 +16,7 @@
             <div align="center" style="margin: 10px 0px"><input id="PName"></div>
             <div align="center" style="margin: 10px 0px"><input id="PSex"></div>
             <div align="center" style="margin: 10px 0px"><input id="PNo"></div>
-            <div align="center" style="margin: 10px 0px"><input id="password"></div>
+            <div align="center" style="margin: 10px 0px"><input id="PPassword"></div>
             <div align="center" style="margin: 10px 0px"><input id="confirmpassword"></div>
             <div align="center" style="margin: 10px 0px"><input id="PClass"></div>
             <div align="center" style="margin: 10px 0px"><input id="PPhone"></div>
@@ -58,8 +58,9 @@
             $('#PSex').combobox({
                 valueField:'sex',
                 textField:'sex',
-                width:'300',
+                width: '300',
                 required:true,
+                panelHeight:'auto',
                 validateOnCreate:false,
                 label:'*性别',
                 labelPosition:'left',
@@ -80,7 +81,7 @@
                 tipPosition:'right',
                 validateOnCreate:false
             });
-            $('#password').passwordbox({
+            $('#PPassword').passwordbox({
                 required:true,
                 label:'*密码',
                 labelPosition:'left',
@@ -90,7 +91,8 @@
                 missingMessage:'密码不能为空',
                 checkInterval:0,
                 showEye:true,
-                validateOnCreate:false,
+                validateOnCreate: false,
+                validType: "password['#password']",
             });
             $('#confirmpassword').passwordbox({
                 required:true,
@@ -101,7 +103,7 @@
                 prompt:'请确认你的密码',
                 checkInterval:0,
                 showEye:true,
-                validType:"equals['#password']",
+                validType:"equals['#PPassword']",
                 missingMessage:'确认密码不能为空',
                 invalidMessage:"两次输入密码不匹配",
                 tipPosition:'right',
@@ -125,7 +127,8 @@
                 cls:'newStyle',
                 missingMessage:'手机号不能为空',
                 tipPosition:'right',
-                validateOnCreate:false
+                validateOnCreate: false,
+                validType: "PPhone['#PPhone']",
             });
             $('#PBankNo').textbox({
                 required:true,
@@ -136,7 +139,8 @@
                 cls:'newStyle',
                 missingMessage:'银行卡号不能为空',
                 tipPosition:'right',
-                validateOnCreate:false
+                validateOnCreate: false,
+                validType: "PBankNo['#PBankNo']",
             });
             $('#PQQ').textbox({
                 required:true,
@@ -147,7 +151,8 @@
                 cls:'newStyle',
                 missingMessage:'QQ号不能为空',
                 tipPosition:'right',
-                validateOnCreate:false
+                validateOnCreate: false,
+                validType: "PQQ['#PQQ']",
             });
             $('#PWechat').textbox({
                 required:true,
@@ -169,12 +174,14 @@
                 cls:'newStyle',
                 missingMessage:'T恤大小不能为空',
                 tipPosition:'right',
-                validateOnCreate:false
+                validType: "PT_Size['#PT_Size']",
+                validateOnCreate:false,
             });
             $('#commit').linkbutton({
                 width:150
             });
             function insert(PName,PSex,PNo,PPassword,PClass,PPhone,PBankNo,PQQ,PWechat,PT_Size){
+                alert(1);
                 var result;
                 $.ajax({
                     type:'post',
@@ -205,6 +212,7 @@
             };
             $('#commit').click(function(){
                 if($('#PName').textbox('isValid')&&$('#PSex').textbox('isValid')&&$('#PPassword').textbox('isValid')&&$('#PNo').textbox('isValid')&&$('#PPhone').textbox('isValid')&&$('#PBankNo').textbox('isValid')&&$('#PQQ').textbox('isValid')&&$('#PWechat').textbox('isValid')&&$('#PT_Size').textbox('isValid')){
+                    alert("a");
                     if(insert($('#PName').textbox('getText'),$('#PSex').textbox('getText'),$('#PNo').textbox('getText'),$('#PPassword').textbox('getText'),$('#PClass').textbox('getText'),$('#PPhone').textbox('getText'),$('#PBankNo').textbox('getText'),$('#PQQ').textbox('getText'),$('#PWechat').textbox('getText'),$('#PT_Size').textbox('getText'))){
                         alert("注册成功");
                     }
@@ -212,7 +220,6 @@
                         alert("该用户已存在");
                     }
                 }
-
             });
             $(function ()
             {
@@ -222,15 +229,12 @@
                     setTimeout(function () { SetCenter(); }, 100);
                 }
             });
-
             function SetCenter()
             {
                 var top = ($(window).height() - $('#p').height() - 2) / 2;  // 边框宽度为2
                 var left = ($(window).width() - $('#p').width() - 2) / 2;
-
                 if (top < 0) top = 0;
                 if (left < 0) left = 0;
-
                 $('#p').panel('move', { left: left, top: top });  // 可以省略 move 方法
             }
             $(function ()
@@ -241,15 +245,12 @@
                     setTimeout(function () { SetCenter_p1(); }, 100);
                 }
             });
-
             function SetCenter_p1()
             {
                 //var top = ($(window).height() - $('#p1').height() - 2) / 2;  // 边框宽度为2
                 var left = ($(window).width() - $('#p1').width() - 2) / 2;
-
                 if (top < 0) top = 0;
                 if (left < 0) left = 0;
-
                 $('#p1').panel('move', { left: left, top: top });  // 可以省略 move 方法
             };
             $.extend($.fn.validatebox.defaults.rules, {  
@@ -258,9 +259,71 @@
                     validator:function(value,param){
                         return $(param[0]).val() == value;
                     },
-                    message:'两次密码输入不一致'
-                }
-                       
+                    message:'两次密码输入不一致',
+                },
+                //密码限制
+                password: {
+                    validator: function (value, param) {
+                        var result = true;
+                        var mes = '';
+                        if (value.length < 6) {
+                            result = false;
+                            mes = '密码过短';
+                        }
+                        else if (value.length > 20) {
+                            mes = '密码过长';
+                            result = false;
+                        }
+                        else if (!/[a-zA-Z]+/.test(value)) {
+                            result = false;
+                            mes = '密码未包含字符';
+                        }
+                        else if (!/[0-9]+/.test(value)) {
+                            mes = '密码未包含数字';
+                            result = false;
+                        }
+                        $.fn.validatebox.defaults.rules.password.message = mes;
+                        return result;
+                    },
+                    
+                },
+                PBankNo: {
+                    validator: function (value, param) {
+                        return (/^\d{19}$/.test(value));
+                    },
+                    message: '请输入规范的19位银行卡号',
+                },
+                PPhone: {
+                    validator: function (value, param) {
+                        return (/^\d{11}$/.test(value));
+                    },
+                    message: '请输入规范的电话号码',
+                },
+                PQQ: {
+                    validator: function (value, param) {
+                        var mes = '';
+                        var result = true;
+                        if (!/^\d+$/.test(value)) {
+                            mes = 'QQ必须为数字';
+                            result = false;
+                        } else if (value.length < 5) {
+                            mes = 'QQ号过短';
+                            result = false;
+                        }
+                        else if (value.length>11) {
+                            mes = 'QQ号过长';
+                            result = false;
+                        }
+                        $.fn.validatebox.defaults.rules.PQQ.message = mes;
+                        return result;
+                    },
+                },
+                PT_Size: {
+                    validator: function (value, param) {
+                        return /^[MSL]{1}$|^[X]{1,10}[L]{1}$/.test(value);
+                    },
+                    message: '请输入规范的尺码,例如S,M,L,XL,...',
+                },
             });
         </script>
     </body>

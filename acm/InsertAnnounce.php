@@ -25,7 +25,8 @@ if ($IsAdmin) {
 
     $Title = $_POST['Title'];
     $Content = $_POST['Content'];
-    $Time = date('Y-m-d h:i:s', time());
+    date_default_timezone_set('PRC');
+    $Time = date('Y-m-d H:i:s', time());
 
     $sql2 = "INSERT INTO
         Announce(Title, Content, Time)
