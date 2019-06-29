@@ -14,17 +14,13 @@
 	<center><h1>ACM内部信息管理系统</h1></center>
 		<div align="right"><u>
 			<em id="p1" style="color: #fff">游客</em>
-			<a id="admin" style="margin:0px 10px;display: none;">admin</a>
-			<a id="ChangePass" style="margin:0px 10px;display: none;">修改密码</a>
+			<a id="back" style="margin:0px 10px">back</a>
 			<a id="logout" style="margin:0px 10px">Log Out</a>
 		</u></div>
 		<div id="tt" style= "opacity:0.9">
 			<div title="首页" href="./homepage.html"></div>
-			<div title="信息维护" href="./maintain.html"></div>
-			<div title="信息查询" href="./SelectInfo.html"></div>
-			<div title="个人申请" ></div>
+			<div title="信息查询" href="./query.html"></div>
 			<div title="事务公告"></div>
-			<div title="队内排名"></div>
 		</div>
 		<script>
 			$('#tt').tabs({
@@ -46,12 +42,10 @@
 					}
 				});
 				if(result==='游客'){
-					$('#logout').linkbutton({'onClick':login});
+					$('#logout').click(login);
 					$('#logout').linkbutton({text:'Log In'});
 				}else{
-					$('#logout').linkbutton({'onClick':logout});
-					$('#ChangePass').linkbutton('enable');
-					document.getElementById('ChangePass').style.display='';
+					$('#logout').click(logout);
 				}
 			}
 			function IsAdmin() {
@@ -67,39 +61,25 @@
 					}
 				});
 				if(result==true){
-					document.getElementById('admin').style.display='';
 					$('#admin').linkbutton('enable');
 				}
-			}
-			$('#admin').linkbutton({
-				width:70,
-				disabled:true,
-				Visible:false,
-				size:'small',
-				//group:"bg"
-				onClick:function(){
-					window.location.href='./admin.html';
-				},
-			})
-			$('#ChangePass').linkbutton({
-				width:70,
-				disabled:true,
-				size:'small',
-				//group:"bg"
-				onClick:function(){
-					window.location.href='./ChangePassword.html';
+				else{
+					alert("无管理员权限");
+					window.location.href="./index.html";
 				}
+			}
+			$('#back').linkbutton({
+				width:70,
+				size:'small',
+				group:"bg"
 			})
-			/*$('#ChangePass').linkbutton('onClick',function(){
-				window.location.href='./ChangePassword.html';
-			})*/
-			/*$('#admin').linkbutton({'onClick',function(){
-				window.location.href='./admin.html';
-			}})*/
+			$('#back').click(function(){
+				window.location.href="./index.html";
+			})
 			$('#logout').linkbutton({
 				width:70,
 				size:'small',
-				//group:"bg"
+				group:"bg"
 			})
 			var logout=function(){
 				$.ajax({

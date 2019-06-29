@@ -21,12 +21,19 @@
 		columns:[[
 			{field:"PName",title:'姓名',editor:'textbox'},
 			{field:"PNo",title:'学号',editor:'textbox'},
+			{field:"PSex",title:'性别',editor:'textbox'},
+			{field:"PHeight",title:'身高',editor:'textbox'},
 			{field:"PClass",title:'班级',editor:'textbox'},
 			{field:"PPhone",title:'电话',editor:'textbox'},
 			{field:"PBankNo",title:'银行卡号',editor:'textbox'},
 			{field:"PQQ",title:'QQ号',editor:'textbox'},
 			{field:"PWechat",title:'微信号',editor:'textbox'},
-			{field:"PT_Size",title:'T恤大小',editor:'textbox'}
+			{field:"PT_Size",title:'T恤大小',editor:'textbox'},
+			{field:"PSignNo",title:'签到序号',editor:'textbox'},
+			{field:"PHdu",title:'杭电账号',editor:'textbox'},
+			{field:"PWeight",title:'体重',editor:'textbox'},
+			{field:"PSingle",title:'是否单身',editor:'textbox'},
+			{field:"PSeatNo",title:'座位号',editor:'textbox'},
 		]],
 		/*data:[
             {PName:"徐悦皓",PNo:"1712190114",PClass:"计科1701",PPhone:"13456789",PBankNo:"15645656",PQQ:"10001",PWechat:"wc",PT_Size:"XXXXL"}
@@ -36,7 +43,7 @@
 			{
 				iconCls:'icon-add',
 				handler:function(){
-					$("#dg").datagrid('appendRow',['','','','','','','','']);
+					$("#dg").datagrid('appendRow',['','','','','','','','','','','','','','','']);
 					d=$('#dg').datagrid('getRows');
 					var maxrow=0;
 					for(let i in d){
@@ -68,12 +75,19 @@
 						data:{
 							'PName':row['PName'],
 							'PNo':row['PNo'],
+							'PSex':row['PSex'],
 							'PClass':row['PClass'],
 							'PPhone':row['PPhone'],
 							'PBankNo':row['PBankNo'],
 							'PQQ':row['PQQ'],
 							'PWechat':row['PWechat'],
 							'PT_Size':row['PT_Size'],
+							'PHeight':row['PHeight'],
+							'PSignNo':row['PSignNo'],
+							'PHdu':row['PHdu'],
+							'PWeight':row['PWeight'],
+							'PSingle':row['PSingle'],
+							'PSeatNo':row['PSeatNo'],
 						},
 						success:function(data){
 							result=data;
