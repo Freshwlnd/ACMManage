@@ -12,20 +12,22 @@ if ($conn->connect_error) {
     die("连接失败: " . $conn->connect_error);
 }
 
+
 $PNo = $_POST['PNo'];
 $PName = $_POST['PName'];
-//$PSex = $_POST['PSex'];
+$PSex = $_POST['PSex'];
 $PClass = $_POST['PClass'];
 $PBankNo = $_POST['PBankNo'];
-//$PHeight = $_POST['PHeight'];
+$PHeight = $_POST['PHeight'];
 $PPhone = $_POST['PPhone'];
 $PQQ = $_POST['PQQ'];
 $PWechat = $_POST['PWechat'];
 $PT_Size = $_POST['PT_Size'];
-//$PSignNo = $_POST['PSignNo'];
+$PSeatNo = $_POST['PSeatNo'];
+$PSignNo = $_POST['PSignNo'];
 $PHdu = $_POST['PHdu'];
-//$PWeight = $_POST['PWeight'];
-//$PSingle = $_POST['PSingle'];
+$PWeight = $_POST['PWeight'];
+$PSingle = $_POST['PSingle'];
 $PPassword = md5('123456');
 
 $IsAdmin = false;
@@ -41,12 +43,13 @@ if (isset($_COOKIE["user"])){
 $sql1 = "SELECT * FROM person WHERE PNo='$PNo'";
 $sql2 = "UPDATE person
     SET
-    PName='$PName', PClass='$PClass', PBankNo='$PBankNo', PPhone='$PPhone',
-    PQQ='$PQQ', PWechat='$PWechat', PT_Size='$PT_Size', PHdu='$PHdu'
+    PName='$PName', PClass='$PClass', PBankNo='$PBankNo', PPhone='$PPhone', PHeight='$PHeight', 
+    PWeight='$PWechat', PQQ='$PQQ', PWechat='$PWechat', PT_Size='$PT_Size', PHdu='$PHdu', 
+    PSex='$PSex', PSeatNo='$PSeatNo', PSignNo='PSignNo', PSingle='$PSingle'
     WHERE PNo='$PNo'";
 $sql3 = "INSERT INTO
-    person(PNo, PName, PClass, PBankNo, PPhone, PQQ, PWechat, PT_Size, PHdu, PPassword)
-     Value ('$PNo', '$PName', '$PClass', '$PBankNo', '$PPhone', '$PQQ', '$PWechat', '$PT_Size', '$PHdu', '$PPassword')";
+    person(PNo, PName, PClass, PBankNo, PPhone, PQQ, PWechat, PT_Size, PHdu, PPassword, PSex, PHeight, PWeight, PSeatNo, PSignNo, PSingle)
+     Value ('$PNo', '$PName', '$PClass', '$PBankNo', '$PPhone', '$PQQ', '$PWechat', '$PT_Size', '$PHdu', '$PPassword', '$PSex', '$PHeight', '$PWeight', '$PSeatNo', '$PSignNo', '$PSingle')";
 
 $result = $conn->query($sql1);
 
