@@ -190,8 +190,8 @@
                     message:'只允许输入数字'
                 }
             });
+            var result;
             function insert(PName,PSex,PNo,PPassword,PClass,PPhone,PBankNo,PQQ,PWechat,PT_Size){
-                var result;
                 $.ajax({
                     type:'post',
                     async:false,
@@ -226,7 +226,7 @@
                         window.location.href='./login.html';
                     }
                     else{
-                        alert("该用户已存在");
+                        alert(result);
                     }
                 }
             });
