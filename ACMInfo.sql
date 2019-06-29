@@ -11,11 +11,33 @@
  Target Server Version : 50643
  File Encoding         : 65001
 
- Date: 29/06/2019 12:16:20
+ Date: 29/06/2019 18:53:33
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for ParticipateOnC
+-- ----------------------------
+DROP TABLE IF EXISTS `ParticipateOnC`;
+CREATE TABLE `ParticipateOnC` (
+  `TNo` int(11) NOT NULL DEFAULT '0',
+  `TName` char(50) DEFAULT NULL,
+  `OnCNo` int(11) NOT NULL DEFAULT '0',
+  `Rank` int(11) DEFAULT NULL,
+  PRIMARY KEY (`TNo`,`OnCNo`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for TrainingContest
+-- ----------------------------
+DROP TABLE IF EXISTS `TrainingContest`;
+CREATE TABLE `TrainingContest` (
+  `TrCNo` int(11) NOT NULL AUTO_INCREMENT,
+  `Time` date DEFAULT NULL,
+  PRIMARY KEY (`TrCNo`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for announcement
@@ -72,7 +94,7 @@ CREATE TABLE `offlinecontest` (
   `Expend` float DEFAULT NULL,
   `Time` date DEFAULT NULL,
   PRIMARY KEY (`OffCNo`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of offlinecontest
@@ -80,6 +102,7 @@ CREATE TABLE `offlinecontest` (
 BEGIN;
 INSERT INTO `offlinecontest` VALUES (1, 'World-Final', '清华大学', 100, '2019-06-28');
 INSERT INTO `offlinecontest` VALUES (2, '西安邀请赛', '西安工业大学', 200, '2019-05-17');
+INSERT INTO `offlinecontest` VALUES (3, '湘潭邀请赛', '湘潭大学', 300, '2019-06-01');
 COMMIT;
 
 -- ----------------------------
@@ -115,18 +138,8 @@ CREATE TABLE `participateoffc` (
 BEGIN;
 INSERT INTO `participateoffc` VALUES (1, '我们一定会有女朋友的', 1, 1, 1, 0, 0);
 INSERT INTO `participateoffc` VALUES (1, '我们一定会有女朋友的', 2, 14, 1, 0, 0);
+INSERT INTO `participateoffc` VALUES (2, '大家好', 3, 37, 0, 1, 0);
 COMMIT;
-
--- ----------------------------
--- Table structure for participateonc
--- ----------------------------
-DROP TABLE IF EXISTS `participateonc`;
-CREATE TABLE `participateonc` (
-  `TNo` int(11) NOT NULL DEFAULT '0',
-  `TName` char(50) DEFAULT NULL,
-  `OnCNo` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`TNo`,`OnCNo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for participatetrc
@@ -152,7 +165,7 @@ CREATE TABLE `person` (
   `PHeight` int(11) DEFAULT NULL,
   `PPhone` char(15) DEFAULT NULL,
   `PQQ` char(15) DEFAULT NULL,
-  `PWechat` char(30) DEFAULT NULL,
+  `PWechat` char(20) DEFAULT NULL,
   `PT_Size` char(5) DEFAULT NULL,
   `PSignNo` int(11) DEFAULT NULL,
   `PHdu` char(100) DEFAULT NULL,
@@ -160,7 +173,7 @@ CREATE TABLE `person` (
   `PSingle` char(5) DEFAULT NULL,
   `PAdmin` int(11) DEFAULT '0',
   `PPassword` char(255) NOT NULL,
-  `PSeatNo` char(20) NOT NULL,
+  `PSeatNo` char(20) DEFAULT NULL,
   PRIMARY KEY (`PNo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -168,10 +181,12 @@ CREATE TABLE `person` (
 -- Records of person
 -- ----------------------------
 BEGIN;
-INSERT INTO `person` VALUES ('1712190113', '龚炯达', NULL, '计科1701', '', NULL, '173****5843', '1848663638', '0', 'M', NULL, '', NULL, NULL, 1, 'e10adc3949ba59abbe56e057f20f883e', '1');
-INSERT INTO `person` VALUES ('1712190114', '徐悦皓', NULL, '计科1701', '', NULL, '1737656xxxx', '9856059xx', '', 'L', NULL, 'freshwind11', NULL, NULL, 1, '21232f297a57a5a743894a0e4a801fc3', '2');
-INSERT INTO `person` VALUES ('1712190115', '张羽丰', NULL, '计科1701', '', NULL, '17376562358', '1691903105', '', 'L', NULL, '蓝音', NULL, NULL, 0, 'e10adc3949ba59abbe56e057f20f883e', '3');
-INSERT INTO `person` VALUES ('1712190120', '罗金荣', NULL, '计科1701', '', NULL, '', '', '', 'M', NULL, '我叫罗金荣', NULL, NULL, 1, '21232f297a57a5a743894a0e4a801fc3', '4');
+INSERT INTO `person` VALUES ('1712190101', '张思远', '男', '计科1701', '7894561874654122543', NULL, '17371737173', '1848184818', '123456', 'XL', NULL, 'zhangsiyuanaichigua', NULL, NULL, 0, 'fb86afdc6f218e61054c5c9574460095', NULL);
+INSERT INTO `person` VALUES ('1712190113', '龚炯达', '男', '计科1701', '', NULL, '173****5843', '1848663638', '0', 'M', NULL, '', NULL, NULL, 1, 'e10adc3949ba59abbe56e057f20f883e', '1');
+INSERT INTO `person` VALUES ('1712190114', '徐悦皓', '男', '计科1701', '', NULL, '1737656xxxx', '9856059xx', '', 'L', NULL, 'freshwind11', NULL, NULL, 1, '21232f297a57a5a743894a0e4a801fc3', '2');
+INSERT INTO `person` VALUES ('1712190115', '张羽丰', '男', '计科1701', '', NULL, '17376562358', '1691903105', '', 'L', NULL, '蓝音', NULL, NULL, 0, 'e10adc3949ba59abbe56e057f20f883e', '3');
+INSERT INTO `person` VALUES ('1712190120', '罗金荣', '男', '计科1701', '', NULL, '', '', '', 'M', NULL, '我叫罗金荣', NULL, NULL, 1, '21232f297a57a5a743894a0e4a801fc3', '4');
+INSERT INTO `person` VALUES ('1712190400', '缪佩翰', '男', '计科1701', '1234567891234567890', NULL, '17371737173', '1884411', '12456498', 'XL', NULL, NULL, NULL, NULL, 0, 'f2d136ea22a5b6e0ed0120a03ab795c2', NULL);
 COMMIT;
 
 -- ----------------------------
@@ -184,13 +199,14 @@ CREATE TABLE `team` (
   `PNo2` char(20) DEFAULT NULL,
   `PNo3` char(20) DEFAULT NULL,
   PRIMARY KEY (`TNo`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of team
 -- ----------------------------
 BEGIN;
 INSERT INTO `team` VALUES (1, '1712190114', '1712190113', '1712190120');
+INSERT INTO `team` VALUES (2, '1712190400', '1712190120', '1712190101');
 COMMIT;
 
 -- ----------------------------
@@ -203,7 +219,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 -- View structure for announce
 -- ----------------------------
 DROP VIEW IF EXISTS `announce`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `announce` AS select `announcement`.`Title` AS `Title`,`announcement`.`Content` AS `Content`,`announcement`.`Time` AS `Time` from `announcement`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `announce` AS select `announcement`.`Title` AS `Title`,`announcement`.`Content` AS `Content`,`announcement`.`Time` AS `Time` from `announcement` order by `announcement`.`Time` desc;
 
 -- ----------------------------
 -- View structure for dailyduty
