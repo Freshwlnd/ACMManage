@@ -41,14 +41,18 @@
                         Time:newValue
                     },
                     success:function(data){
-                        //alert(data);
                         data=JSON.parse(data);
                         document.getElementById("title").innerHTML=data["Title"];
                         document.getElementById("content").innerHTML=data["Content"];
                         document.getElementById("time").innerHTML=data["Time"];
                     },
                     fail:function(data){
-                        alert(data);
+                        $.messager.show({
+                            cls:'c2',
+                            msg:data,
+                            timeout:3000,
+                            showType:'fade',
+                        })
                     }
                 });
             },

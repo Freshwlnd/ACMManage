@@ -320,9 +320,19 @@
                     }
                 });
                 if (result == true) {
-                    alert("修改成功！");
+                    $.messager.show({
+                        cls:'c2',
+                        msg:"修改成功！",
+                        timeout:3000,
+                        showType:'fade',
+                    })
                 } else {
-                    alert(result);
+                    $.messager.show({
+                        cls:'c2',
+                        msg:result,
+                        timeout:3000,
+                        showType:'fade',
+                    })
                 }
                 //刷新信息
                 $('#panelC').panel('clear');

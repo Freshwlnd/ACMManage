@@ -85,7 +85,6 @@
 		group:"bg"
 	})
 		$('#login').click(function(){
-			//alert($('#password').textbox('getValue'));
 			var account = $('#count').textbox('getValue');
 			var password = $('#password').textbox('getValue');
 			var result;
@@ -105,7 +104,12 @@
 				window.location.href="./index.html";
 //				window.location.href="./selectinfo.html";
 			} else {
-				alert(result);
+				$.messager.show({
+					cls:'c2',
+					msg:result,
+					timeout:3000,
+					showType:'fade',
+				})
 			}
 		/*
 			if($('#count').textbox('getValue')=='1712190120'&&$('#password').textbox('getValue')=='admin'){

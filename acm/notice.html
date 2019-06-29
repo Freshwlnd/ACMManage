@@ -78,13 +78,23 @@
 							}
 						});
 						if(result==true){
-							alert("发布成功");
+							$.messager.show({
+	                            cls:'c2',
+	                            msg:"发布成功",
+	                            timeout:3000,
+	                            showType:'fade',
+	                        })
 							$('#cb').combobox('reload','./GetAnnounce.php');
 							$('#win').window({
 			        			closed:true,
 			        		})
 						}else{
-							alert(result);
+							$.messager.show({
+	                            cls:'c2',
+	                            msg:result,
+	                            timeout:3000,
+	                            showType:'fade',
+	                        })
 						}
 					}
 				})
@@ -106,10 +116,20 @@
 					}
 				});
 				if(result==true){
-					alert('删除成功');
+                    $.messager.show({
+                        cls:'c2',
+                        msg:'删除成功',
+                        timeout:3000,
+                        showType:'fade',
+                    })
 					$('#cb').combobox('reload','./GetAnnounce.php');
 				}else{
-					alert(result);
+				    $.messager.show({
+                        cls:'c2',
+                        msg:result,
+                        timeout:3000,
+                        showType:'fade',
+                    })
 				}
         	}
         })
@@ -132,7 +152,12 @@
 						$('#w_content').textbox('setText',data["Content"]);
 					},
 					fail:function(data){
-						alert(data);
+						$.messager.show({
+                            cls:'c2',
+                            msg:data,
+                            timeout:3000,
+                            showType:'fade',
+                        })
 					}
 				});
 				$('#commit').linkbutton({//提交
@@ -152,13 +177,23 @@
 							}
 						});
 						if(result==true){
-							alert("修改成功");
+							$.messager.show({
+	                            cls:'c2',
+	                            msg:"修改成功",
+	                            timeout:3000,
+	                            showType:'fade',
+	                        })
 							$('#cb').combobox('reload','./GetAnnounce.php');
 							$('#win').window({
 			        			closed:true,
 			        		})
 						}else{
-							alert(result);
+							$.messager.show({
+	                            cls:'c2',
+	                            msg:result,
+	                            timeout:3000,
+	                            showType:'fade',
+	                        })
 						}
 					}
 				})
@@ -179,14 +214,18 @@
 						Time:newValue
 					},
 					success:function(data){
-						//alert(data);
 						data=JSON.parse(data);
 						document.getElementById("title").innerHTML=data["Title"];
 						document.getElementById("content").innerHTML=data["Content"];
 						document.getElementById("time").innerHTML=data["Time"];
 					},
 					fail:function(data){
-						alert(data);
+						$.messager.show({
+                            cls:'c2',
+                            msg:data,
+                            timeout:3000,
+                            showType:'fade',
+                        })
 					}
 				});
         	},

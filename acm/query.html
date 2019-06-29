@@ -98,8 +98,12 @@
 					}
 					else{
 						$("#dg").datagrid('updateRow',index,row);
-						alert(result);
-						alert("修改失败");
+						$.messager.show({
+                            cls:'c2',
+                            msg:"修改失败",
+                            timeout:3000,
+                            showType:'fade',
+                        })
 					}
 					$("#dg").datagrid('unselectRow',index);
 				}
@@ -124,7 +128,12 @@
 						$('#dg').datagrid('deleteRow',index);
 					}
 					else{
-						alert("删除失败");
+						$.messager.show({
+                            cls:'c2',
+                            msg:"删除失败",
+                            timeout:3000,
+                            showType:'fade',
+                        })
 					}
 				}
 			},

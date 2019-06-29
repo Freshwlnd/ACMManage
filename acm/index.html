@@ -24,7 +24,7 @@
 			<div title="信息维护" href="./maintain.html"></div>
 			<div title="信息查询" href="./SelectInfo.html"></div>
 			<!--div title="个人申请"></div-->
-			<div title="奖牌榜"></div>
+			<div title="奖牌榜" href="./medal.html"></div>
 		</div>
 		<script>
 			$('#tt').tabs({
@@ -68,7 +68,12 @@
 					document.getElementById('admin').style.display='';
 					$('#admin').linkbutton('enable');
 				} else if(result!=false) {
-					alert(result);
+					$.messager.show({
+                        cls:'c2',
+                        msg:result,
+                        timeout:3000,
+                        showType:'fade',
+                    })
 				}
 			}
 			$('#admin').linkbutton({
@@ -107,10 +112,20 @@
 					url: './LogOut.php',
 					success: function (data) {
 						if(data==true) {
-							alert('登出成功！');
+							$.messager.show({
+	                            cls:'c2',
+	                            msg:'登出成功！',
+	                            timeout:3000,
+	                            showType:'fade',
+	                        })
 							location.reload();
 						} else {
-							alert(data);
+							$.messager.show({
+	                            cls:'c2',
+	                            msg:data,
+	                            timeout:3000,
+	                            showType:'fade',
+	                        })
 						}
 					}
 				});
