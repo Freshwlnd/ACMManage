@@ -24,13 +24,20 @@ if (isset($_COOKIE["user"])){
 
 if ($IsAdmin) {
 
-    $sql2 = "SELECT  PName, PNo, PSex, PClass, PBankNo, PHeight, PPhone, PQQ, PWechat, PT_Size, PSignNo, PHdu, PWeight, PSingle FROM person";
+    $sql2 = "SELECT * FROM AdminData";
     $result = $conn->query($sql2);
-    echo json_encode($result->fetch_all(MYSQLI_ASSOC));
+
+    if($result) {
+        echo json_encode($result->fetch_all(MYSQLI_ASSOC));
+    } else {
+        $a['error'] = "查询出错！";
+        echo json_encode($a);
+    }
 
 } else {
 
-    echo json_encode("{'error':'权限不足！'}");
+    $a['error'] = "权限不足！";
+    echo json_encode($a);
 
 }
 

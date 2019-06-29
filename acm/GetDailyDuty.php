@@ -12,19 +12,18 @@ if ($conn->connect_error) {
     die("连接失败: " . $conn->connect_error);
 }
 
-$PNo = '1712190120';
+$sql1 = "SELECT * FROM DailyDuty";
 
-if (isset($_COOKIE["user"])){
+$result = $conn->query($sql1);
 
-    $PNo = $_COOKIE["user"];
-    $sql1 = "SELECT * FROM PNoPName WHERE PNo='$PNo'";
-    $result = $conn->query($sql1);
-    $row = mysqli_fetch_assoc($result);
-    echo $row['PNo'] . " " . $row['PName'];
+if($result) {
+
+    echo json_encode($result->fetch_all(MYSQLI_ASSOC));
 
 } else {
 
-    echo '游客';
+    $a['error'] = "查询出错！";
+    echo json_encode($a);
 
 }
 
