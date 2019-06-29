@@ -26,16 +26,25 @@ $PNo1 = $_POST['PNo'];
 
 if ($IsAdmin) {
 
-    $sql2 = "SELECT PNo, PName, PSex, PClass, PBankNo, PHeight, PPhone, PQQ, PWechat, PT_Size, PSeatNo, PHdu, PWeight, PSingle FROM person WHERE PNo='$PNo1'";
+    $sql2 = "SELECT * FROM person WHERE PNo='$PNo1'";
     $result = $conn->query($sql2);
-    echo json_encode(mysqli_fetch_assoc($result));
+    if($result) {
+        echo json_encode(mysqli_fetch_assoc($result));
+    } else {
+        $a['error'] = "查询出错！";
+        echo json_encode($a);
+    }
 
 } else {
 
-    $sql2 = "SELECT PNo, PName, PSex, PClass, PBankNo, PHeight, PPhone, PQQ, PWechat, PT_Size, PSeatNo, PHdu, PWeight, PSingle FROM person WHERE PNo='$PNo1'";
+    $sql2 = "SELECT * FROM NormalData WHERE PNo='$PNo1'";
     $result = $conn->query($sql2);
-    echo json_encode(mysqli_fetch_assoc($result));
-
+    if($result) {
+        echo json_encode(mysqli_fetch_assoc($result));
+    } else {
+        $a['error'] = "查询出错！";
+        echo json_encode($a);
+    }
 }
 
 ?>
