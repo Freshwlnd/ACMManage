@@ -24,7 +24,7 @@
 			<div title="信息维护" href="./maintain.html"></div>
 			<div title="信息查询" href="./SelectInfo.html"></div>
 			<!--div title="个人申请"></div-->
-			<div title="队内排名"></div>
+			<div title="奖牌榜"></div>
 		</div>
 		<script>
 			$('#tt').tabs({
@@ -60,15 +60,15 @@
 					type: 'post',
 					async : false, //同步请求
 					url: './IsAdmin.php',
-					data: {},
 					success: function (data) {
 						result=data;
-						document.getElementById("p1").innerHTML=data;
 					}
 				});
 				if(result==true){
 					document.getElementById('admin').style.display='';
 					$('#admin').linkbutton('enable');
+				} else if(result!=false) {
+					alert(result);
 				}
 			}
 			$('#admin').linkbutton({

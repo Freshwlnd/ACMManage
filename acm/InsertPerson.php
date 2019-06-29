@@ -14,7 +14,7 @@ if ($conn->connect_error) {
 
 $PNo = $_POST['PNo'];
 $PName = $_POST['PName'];
-//$PSex = $_POST['PSex'];
+$PSex = $_POST['PSex'];
 $PClass = $_POST['PClass'];
 $PBankNo = $_POST['PBankNo'];
 //$PHeight = $_POST['PHeight'];
@@ -26,11 +26,11 @@ $PT_Size = $_POST['PT_Size'];
 //$PHdu = $_POST['PHdu'];
 //$PWeight = $_POST['PWeight'];
 //$PSingle = $_POST['PSingle'];
-$PPassword = md5('123456');
+$PPassword = md5($_POST['PPassword']);
 
 $sql1 = "INSERT INTO
-    person(PNo, PName, PClass, PBankNo, PPhone, PQQ, PWechat, PT_Size, PPassword)
-     Value ('$PNo', '$PName', '$PClass', '$PBankNo', '$PPhone', '$PQQ', '$PWechat', '$PT_Size', '$PPassword')";
+    person(PNo, PName, PSex, PClass, PBankNo, PPhone, PQQ, PWechat, PT_Size, PPassword)
+     Value ('$PNo', '$PName', '$PSex', '$PClass', '$PBankNo', '$PPhone', '$PQQ', '$PWechat', '$PT_Size', '$PPassword')";
 
 $result = $conn->query($sql1);
 

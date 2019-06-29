@@ -15,16 +15,23 @@ if ($conn->connect_error) {
 $account = $_POST['account'];
 $password = md5($_POST['password']);
 
-$sql1 = "SELECT * FROM person WHERE PNo='$account' AND PPassword='$password'";
+$sql1 = "SELECT * FROM UserPassword WHERE 学号='$account' AND 密码='$password'";
 
 $result = $conn->query($sql1);
 
-if ($result->num_rows > 0) {
-    setcookie("user", $account, time()+3600);
-    echo true;
+
+if($result) {
+	if ($result->num_rows > 0) {
+	    setcookie("user", $account, time()+3600);
+	    echo true;
+	} else {
+	    echo "密码错误！";
+	}
 } else {
-    echo "密码错误！";
+    echo("错误描述: " . mysqli_error($conn));
 }
+
+
 $conn->close();
 
 ?>
