@@ -71,7 +71,7 @@
 							url:'./InsertAnnounce.php',
 							data:{
 								Title:$('#w_title').textbox('getText'),
-								Content:$('#w_content').textbox('getText'),
+								Content:$('#w_content').textbox('getValue'),
 							},
 							success:function (data) {
 								result=data;
@@ -170,7 +170,7 @@
 							data:{
 								Time:$('#cb').combobox('getValue'),
 								Title:$('#w_title').textbox('getText'),
-								Content:$('#w_content').textbox('getText'),
+								Content:$('#w_content').textbox('getValue'),
 							},
 							success:function (data) {
 								result=data;

@@ -21,7 +21,16 @@
 		columns:[[
 			{field:"PName",title:'姓名',editor:'textbox'},
 			{field:"PNo",title:'学号',editor:'textbox'},
-			{field:"PSex",title:'性别',editor:'textbox'},
+			{field:"PSex",title:'性别',editor:{type:'combobox',options:{
+				valueField:'sex',
+				editable:false,
+				panelHeight:'auto',
+				textField:'sex_t',
+				data:[
+					{sex:'男',sex_t:'男'},
+					{sex:'女',sex_t:'女'},
+					],
+				}}},
 			{field:"PHeight",title:'身高',editor:'textbox'},
 			{field:"PClass",title:'班级',editor:'textbox'},
 			{field:"PPhone",title:'电话',editor:'textbox'},
