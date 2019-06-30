@@ -44,18 +44,39 @@
             var title = $("<br /><br /><br /><center><div><h1>请输入需要查询的学号</h1></div></center>" +
                 "<center><input id='PNo' class='easyui-combobox' /></center> " +
                 "");
-            
-            $('#PNo').textbox({
-                width: 400,
-                height: 40,
-            });
             $('#panel').panel('clear');
             $('#panel').append(title);
+            $('#PNo').combobox({
+                valueField:"PNo",
+                textField: "PNo",
+                panelHeight:'auto',
+                editable: true,
+                url:'./GetLikeData.php',
+                onChange: function (newValue) {
+                    var result;
+                    $.ajax({
+                        type: 'post',
+                        async: false,
+                        url: './GetLikeData.php',
+                        data: {
+                            PNo:newValue,
+                        },
+                        success: function (data) {
+                            result=data;
+                        },
+
+                    });
+                },
+            }),
             $('#panel').show();
             document.getElementById('buttonSelect').style.display = '';
             document.getElementById('buttonBack').style.display = 'none';
         }
-        //按下查询键
+
+
+
+
+            //按下查询键
         function select() {
             var result;
             var title;
@@ -113,7 +134,7 @@
                     document.getElementById('buttonSelect').style.display = 'none';
                     document.getElementById('buttonBack').style.display = '';
                 }
-                
+
             }
         };
         window.onload = mypanel();
