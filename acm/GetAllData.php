@@ -24,7 +24,10 @@ if (isset($_COOKIE["user"])){
 
 if ($IsAdmin) {
 
-    $sql2 = "SELECT * FROM AdminData";
+    $sort = isset($_POST['sort']) ? strval($_POST['sort']) : 'PNo';
+    $order = isset($_POST['order']) ? strval($_POST['order']) : 'asc';
+
+    $sql2 = "SELECT * FROM AdminData order by $sort $order";
     $result = $conn->query($sql2);
 
     if($result) {
